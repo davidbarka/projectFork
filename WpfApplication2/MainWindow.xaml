@@ -16,7 +16,7 @@
             <ColumnDefinition Width="Auto" MinWidth="206"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image Margin="-6,-99,-2,0" Grid.RowSpan="2" Source="bg.jpg" Stretch="Fill" Grid.ColumnSpan="2"/>
+        <Image Margin="-6,-99,-2,0" Grid.RowSpan="2" Source="bg.jpg" Stretch="Fill" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
         <Label x:Name="interLabel" Content="internnummer" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
         <Label x:Name="plassLabel" Content="plassering" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="31" Width="106" Grid.Row="1"/>
         <Label x:Name="serieLabel" Content="serienummer" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
@@ -72,6 +72,6 @@
             <System:String>Svetruck</System:String>
             <System:String>Plukktruck</System:String>
         </ComboBox>
-        <CheckBox x:Name="dateCheck" Content="unknown Date" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="15" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="dateCheck" Content="unknown Date" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="15" VerticalAlignment="Bottom" Foreground="White" />
     </Grid>
 </Window>

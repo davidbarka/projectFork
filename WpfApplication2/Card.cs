@@ -13,13 +13,13 @@ namespace ForkliftManager
 {
     [Serializable()]
     class Card : System.Windows.Controls.Grid, ISerializable
-
     {
         private List<SolidColorBrush> cardColors = new List<SolidColorBrush>() { new SolidColorBrush(Colors.Tomato), new SolidColorBrush(Colors.Gold),new SolidColorBrush(Colors.SkyBlue),
                                                                                 new SolidColorBrush(Colors.DarkSeaGreen), new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.CornflowerBlue) };
         private List<LinearGradientBrush> cardGradientColors = new List<LinearGradientBrush>() { new LinearGradientBrush(Colors.Red, Colors.Salmon, 60), new LinearGradientBrush(Colors.Goldenrod, Colors.Gold, 60), 
                                                                                              new LinearGradientBrush(Colors.RoyalBlue, Colors.SkyBlue, 60), new LinearGradientBrush(Colors.Green, Colors.DarkSeaGreen, 60) };
-        private TextBlock interNr{get; set;}
+        private List<ServiceHistory> repHistorik;
+        private TextBlock interNr { get; set; }
         private TextBlock serieNr { get; set; }
         private TextBlock plassering { get; set; }
         private TextBlock type { get; set; }
@@ -32,7 +32,7 @@ namespace ForkliftManager
         private Grid grid { get; set; }
         Grid CheckGrid { get; set; }
         Grid ServiceGrid { get; set; }
-        private int cardWidth = 750; 
+        private int cardWidth = 750;
         private int cardHeight = 400;
         private Rectangle frame { get; set; }
         private List<Card> listRef;
@@ -42,6 +42,8 @@ namespace ForkliftManager
         private Button serviceDone, yearCheck;
         private DoubleAnimation DueDateAnimation;
         private int Priority { get; set; }
+        ScrollViewer serviceScroller;
+        StackPanel serviceStack;
 
         public Card(string internr, string serienr, string plass, string type, int aar, int maande, List<Card> listRef, StackPanel stackRef)
         {
@@ -86,6 +88,7 @@ namespace ForkliftManager
 
         private void Init(string internr, string serienr, string plass, string type, int aar, int maande)
         {
+            repHistorik = new List<ServiceHistory>();
             interNr = new TextBlock();
             interNr.Text = internr;
             serieNr = new TextBlock();
@@ -111,7 +114,7 @@ namespace ForkliftManager
             this.Width = cardWidth;
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
-            
+
             //grid.ShowGridLines = true;
 
             GridSetup();
@@ -167,6 +170,8 @@ namespace ForkliftManager
             yearBox.FontSize = 14;
             serviceMonthBox.FontSize = 14;
             serviceYearBox.FontSize = 14;
+            serviceYearBox.SelectedIndex = DateTime.Now.Year - 2000;
+            serviceMonthBox.SelectedIndex = DateTime.Now.Month - 1;
 
             for (int i = 0; i < monthsName.Length; i++)
             {
@@ -175,13 +180,13 @@ namespace ForkliftManager
             }
             for (int i = 0; i < 50; i++)
             {
-                yearBox.Items.Add(2000+i);
+                yearBox.Items.Add(2000 + i);
                 serviceYearBox.Items.Add(2000 + i);
             }
             if (yearReg >= 2000)
             {
                 yearBox.SelectedIndex = yearReg - 2000;
-                monthBox.SelectedIndex = monthReg-1;
+                monthBox.SelectedIndex = monthReg - 1;
             }
 
             CheckGrid = new Grid();
@@ -207,7 +212,8 @@ namespace ForkliftManager
 
         private void serviceDone_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            repHistorik.Add(new ServiceHistory(serviceYearBox.SelectedItem.ToString(), serviceMonthBox.SelectedItem.ToString(), 0));
+            serviceStack.Children.Add(repHistorik[repHistorik.Count-1]);
         }
 
         void yearCheck_Click(object sender, RoutedEventArgs e)
@@ -227,7 +233,7 @@ namespace ForkliftManager
             {
                 yearReg = DateTime.Now.Year;
                 yearBox.SelectedIndex = DateTime.Now.Year - 2000;
-                monthReg = monthBox.SelectedIndex+1;
+                monthReg = monthBox.SelectedIndex + 1;
             }
             else
             {
@@ -269,12 +275,12 @@ namespace ForkliftManager
             Grid.SetRow(ServiceGrid, 3);
             grid.Children.Add(ServiceGrid);
 
-            DataTable bla2 = new DataTable("Servicer");
-            DataGrid bla = new DataGrid();
-            bla.Items.Add(bla2);
-            Grid.SetColumn(bla, 2);
-            Grid.SetRow(bla, 2);
-            grid.Children.Add(bla);
+            serviceScroller = new ScrollViewer();
+            serviceStack = new StackPanel();
+            serviceScroller.Content = serviceStack;
+            Grid.SetColumn(serviceScroller, 2);
+            Grid.SetRow(serviceScroller, 2);
+            grid.Children.Add(serviceScroller);
         }
 
         private void GridSetup()
@@ -310,11 +316,27 @@ namespace ForkliftManager
 
         private void DeleteCard(object sender, MouseButtonEventArgs e)
         {
-            if (System.Windows.MessageBox.Show("Do you want to delete card?", "Delete Card?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = this.Height;
+            da.To = 0;
+            da.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+            this.BeginAnimation(Panel.HeightProperty, da);
+            frame.BeginAnimation(Panel.HeightProperty, da);
+            isOpen = false;
+            if (System.Windows.MessageBox.Show("Do you want to delete this card?", "Delete Card?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 listRef.Remove(this);
-                UpdateList(); 
+                UpdateList();
             }
+            else
+            {
+                da.From = 0;
+                da.To = 50;
+                da.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+                this.BeginAnimation(Panel.HeightProperty, da);
+                frame.BeginAnimation(Panel.HeightProperty, da);
+            }
+            CheckAnnualInspection();
         }
 
         private void clickedCard(object sender, MouseButtonEventArgs e)
@@ -378,7 +400,7 @@ namespace ForkliftManager
 
         #endregion
 
-        public void CheckAnnualInspection() 
+        public void CheckAnnualInspection()
         {
             int thisYear = DateTime.Now.Year;
             int thisMonth = DateTime.Now.Month;
@@ -387,7 +409,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[OK];//cardColors[OK];
                 Priority = 4;
             }
-            else if (thisYear > yearReg  || thisYear >= yearReg && thisMonth > monthReg)
+            else if (thisYear > yearReg || thisYear >= yearReg && thisMonth > monthReg)
             {
                 this.Background = cardGradientColors[DANGER];//cardColors[DANGER];
                 Priority = 0;
@@ -444,7 +466,8 @@ namespace ForkliftManager
             listRef = (List<Card>)info.GetValue("listRef", typeof(List<Card>));
             ServiceYear = (int)info.GetValue("ServiceYear", typeof(int));
             ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));
-            Init(interNr.Text, serieNr.Text,  plassering.Text,  type.Text, yearReg, monthReg );
+            repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
+            Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg);
             CheckAnnualInspection();
         }
 
@@ -460,6 +483,7 @@ namespace ForkliftManager
             info.AddValue("listRef", listRef);
             info.AddValue("ServiceYear", ServiceYear);
             info.AddValue("ServiceMonth", ServiceMonth);
+            info.AddValue("repHistorik", repHistorik);
         }
 
         // helper methods form main class
