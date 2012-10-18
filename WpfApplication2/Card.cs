@@ -147,6 +147,8 @@ namespace ForkliftManager
             this.MouseLeave += new MouseEventHandler(mouseLeaveCard);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
             this.MouseRightButtonDown += new MouseButtonEventHandler(DeleteCard);
+
+            UpdateServiceList();
         }
 
         private void ComboBoxSetup()
@@ -214,6 +216,7 @@ namespace ForkliftManager
         {
             repHistorik.Add(new ServiceHistory(serviceYearBox.SelectedItem.ToString(), serviceMonthBox.SelectedItem.ToString(), 0));
             serviceStack.Children.Add(repHistorik[repHistorik.Count-1]);
+            
         }
 
         void yearCheck_Click(object sender, RoutedEventArgs e)
@@ -447,6 +450,14 @@ namespace ForkliftManager
             else
             {
                 this.BeginAnimation(Panel.OpacityProperty, null);
+            }
+        }
+
+        private void UpdateServiceList()
+        {
+            for (int i = 0; i < repHistorik.Count; i++)
+            {
+                serviceStack.Children.Add(repHistorik[i]);
             }
         }
 
