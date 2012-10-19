@@ -38,7 +38,8 @@ namespace ForkliftManager
         private List<Card> listRef;
         private StackPanel stackRef;
         private bool isOpen = false;
-        private ComboBox monthBox, yearBox, serviceMonthBox, serviceYearBox;
+        private ComboBox monthBox, yearBox;
+        private DatePicker serviceDate;
         private Button serviceDone, yearCheck;
         private DoubleAnimation DueDateAnimation;
         private int Priority { get; set; }
@@ -153,7 +154,6 @@ namespace ForkliftManager
 
         private void ComboBoxSetup()
         {
-            string[] monthsName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
             serviceDone = new Button();
             serviceDone.Click += serviceDone_Click;
             serviceDone.Content = "Service done";
@@ -166,25 +166,11 @@ namespace ForkliftManager
             yearCheck.FontWeight = FontWeights.SemiBold;
             monthBox = new ComboBox();
             yearBox = new ComboBox();
-            serviceMonthBox = new ComboBox();
-            serviceYearBox = new ComboBox();
+            serviceDate = new DatePicker();
+            serviceDate.FontSize = 14;
             monthBox.FontSize = 14;
             yearBox.FontSize = 14;
-            serviceMonthBox.FontSize = 14;
-            serviceYearBox.FontSize = 14;
-            serviceYearBox.SelectedIndex = DateTime.Now.Year - 2000;
-            serviceMonthBox.SelectedIndex = DateTime.Now.Month - 1;
 
-            for (int i = 0; i < monthsName.Length; i++)
-            {
-                monthBox.Items.Add(monthsName[i]);
-                serviceMonthBox.Items.Add(monthsName[i]);
-            }
-            for (int i = 0; i < 50; i++)
-            {
-                yearBox.Items.Add(2000 + i);
-                serviceYearBox.Items.Add(2000 + i);
-            }
             if (yearReg >= 2000)
             {
                 yearBox.SelectedIndex = yearReg - 2000;
@@ -203,18 +189,16 @@ namespace ForkliftManager
             Grid.SetColumn(yearCheck, 2);
             CheckGrid.Children.Add(yearCheck);
 
-            Grid.SetColumn(serviceMonthBox, 0);
-            ServiceGrid.Children.Add(serviceMonthBox);
-            Grid.SetColumn(serviceYearBox, 1);
-            ServiceGrid.Children.Add(serviceYearBox);
-            Grid.SetColumn(serviceDone, 2);
+            Grid.SetColumn(serviceDate, 0);
+            ServiceGrid.Children.Add(serviceDate);
+            Grid.SetColumn(serviceDone, 1);
             ServiceGrid.Children.Add(serviceDone);
 
         }
 
         private void serviceDone_Click(object sender, RoutedEventArgs e)
         {
-            repHistorik.Add(new ServiceHistory(serviceYearBox.SelectedItem.ToString(), serviceMonthBox.SelectedItem.ToString(), 0));
+            //repHistorik.Add(new ServiceHistory(serviceYearBox.SelectedItem.ToString(), serviceMonthBox.SelectedItem.ToString(), 0));
             serviceStack.Children.Add(repHistorik[repHistorik.Count-1]);
             
         }
@@ -254,10 +238,8 @@ namespace ForkliftManager
             checkCol2.Width = new GridLength(60);
             ColumnDefinition checkCol3 = new ColumnDefinition();
             ColumnDefinition serviceCol1 = new ColumnDefinition();
-            serviceCol1.Width = new GridLength(100);
+            serviceCol1.Width = new GridLength(200);
             ColumnDefinition serviceCol2 = new ColumnDefinition();
-            serviceCol2.Width = new GridLength(60);
-            ColumnDefinition serviceCol3 = new ColumnDefinition();
 
 
             CheckGrid.ColumnDefinitions.Add(checkCol1);
@@ -265,7 +247,6 @@ namespace ForkliftManager
             CheckGrid.ColumnDefinitions.Add(checkCol3);
             ServiceGrid.ColumnDefinitions.Add(serviceCol1);
             ServiceGrid.ColumnDefinitions.Add(serviceCol2);
-            ServiceGrid.ColumnDefinitions.Add(serviceCol3);
 
             //ServiceGrid.ShowGridLines = true;
             //CheckGrid.ShowGridLines = true;
