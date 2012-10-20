@@ -154,6 +154,7 @@ namespace ForkliftManager
 
         private void ComboBoxSetup()
         {
+            string[] monthsName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
             serviceDone = new Button();
             serviceDone.Click += serviceDone_Click;
             serviceDone.Content = "Service done";
@@ -167,6 +168,7 @@ namespace ForkliftManager
             monthBox = new ComboBox();
             yearBox = new ComboBox();
             serviceDate = new DatePicker();
+            serviceDate.Text = DateTime.Now.ToShortDateString();
             serviceDate.FontSize = 14;
             monthBox.FontSize = 14;
             yearBox.FontSize = 14;
@@ -176,6 +178,15 @@ namespace ForkliftManager
                 yearBox.SelectedIndex = yearReg - 2000;
                 monthBox.SelectedIndex = monthReg - 1;
             }
+            for (int i = 0; i < monthsName.Length; i++)
+            {
+                monthBox.Items.Add(monthsName[i]);
+            }
+            for (int i = 0; i < 50; i++)
+            {
+                yearBox.Items.Add(2000 + i);
+            }
+
 
             CheckGrid = new Grid();
             ServiceGrid = new Grid();
@@ -198,8 +209,9 @@ namespace ForkliftManager
 
         private void serviceDone_Click(object sender, RoutedEventArgs e)
         {
-            //repHistorik.Add(new ServiceHistory(serviceYearBox.SelectedItem.ToString(), serviceMonthBox.SelectedItem.ToString(), 0));
-            serviceStack.Children.Add(repHistorik[repHistorik.Count-1]);
+            if (serviceDate.Text.Equals(""))serviceDate.Text = DateTime.Now.ToShortDateString();
+            repHistorik.Add(new ServiceHistory(serviceDate.Text));
+            serviceStack.Children.Insert(0, repHistorik[repHistorik.Count-1]);
             
         }
 
@@ -438,12 +450,13 @@ namespace ForkliftManager
         {
             for (int i = 0; i < repHistorik.Count; i++)
             {
-                serviceStack.Children.Add(repHistorik[i]);
+                serviceStack.Children.Insert(0, repHistorik[i]);
             }
         }
 
         public Card(SerializationInfo info, StreamingContext context)
         {
+            repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
             interNr = new TextBlock();
             interNr.Text = (string)info.GetValue("interNr", typeof(string));
             driftTimer = (int)info.GetValue("driftTimer", typeof(int));
@@ -457,8 +470,7 @@ namespace ForkliftManager
             type.Text = (string)info.GetValue("type", typeof(string));
             listRef = (List<Card>)info.GetValue("listRef", typeof(List<Card>));
             ServiceYear = (int)info.GetValue("ServiceYear", typeof(int));
-            ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));
-            repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
+            ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));       
             Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg);
             CheckAnnualInspection();
         }
