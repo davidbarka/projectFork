@@ -20,8 +20,8 @@
         <Label x:Name="interLabel" Content="internnummer" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
         <Label x:Name="plassLabel" Content="plassering" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="31" Width="106" Grid.Row="1"/>
         <Label x:Name="serieLabel" Content="serienummer" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
-        <Label x:Name="labelSearch" Content="search" Margin="0,-3,158,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="35" Grid.Column="1" HorizontalAlignment="Right" Width="69"/>
-        <Label x:Name="label" Content="add to list" HorizontalAlignment="Left" Margin="0,-9,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Grid.RowSpan="2" Height="58" Width="186"/>
+        <Label x:Name="labelSearch" Content="søk" Margin="0,-3,136,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="35" Grid.Column="1" HorizontalAlignment="Right" Width="69"/>
+        <Label x:Name="label" Content="legg til" HorizontalAlignment="Left" Margin="0,-9,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Grid.RowSpan="2" Height="58" Width="280" Grid.ColumnSpan="2" />
         <TextBox x:Name="RegNummer" HorizontalAlignment="Left" Height="26" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Internnummer" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
         <Button x:Name="AddBtn" Content="Add" Margin="99,0,10,10" Click="AddBtn_Click" Grid.Row="1" FontSize="18" Height="30" VerticalAlignment="Bottom"/>
         <Grid x:Name="listView" Margin="0,0,-2,21" Grid.Row="1" Grid.Column="1">
@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="62*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Label x:Name="label_Copy" Content="annual inspections" HorizontalAlignment="Left" Margin="0,0,0,265" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Width="196" Grid.Row="1" Height="38" VerticalAlignment="Bottom"/>
+        <Label x:Name="label_Copy" Content="årskontroll" HorizontalAlignment="Left" Margin="0,0,0,265" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Width="196" Grid.Row="1" Height="38" VerticalAlignment="Bottom"/>
         <TextBox x:Name="Merknad" HorizontalAlignment="Left" Height="26" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Merknad" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
         <ComboBox x:Name="Type" HorizontalAlignment="Left" Margin="10,194,0,0" Grid.Row="1" VerticalAlignment="Top" Width="186" Height="26" ToolTip="Type" FontSize="16" BorderBrush="White" SelectedIndex="0">
             <ComboBox.Background>
@@ -72,6 +72,6 @@
             <System:String>Svetruck</System:String>
             <System:String>Plukktruck</System:String>
         </ComboBox>
-        <CheckBox x:Name="dateCheck" Content="unknown Date" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="15" VerticalAlignment="Bottom" Foreground="White" />
+        <CheckBox x:Name="dateCheck" Content="ukjent dato" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="15" VerticalAlignment="Bottom" Foreground="White" />
     </Grid>
 </Window>

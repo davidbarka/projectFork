@@ -8,6 +8,7 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Runtime.Serialization;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace ForkliftManager
 {
@@ -17,8 +18,12 @@ namespace ForkliftManager
         private string ServiceDate { get; set; }
         private string ServiceHours { get; set; }
         private Grid mainGrid;
-        private TextBox input;
+       // private TextBox input;
         private TextBlock hoursBlock;
+        private bool isOpen = false;
+        private Rectangle frame;
+        private int fullCardHeight = 50;
+        private int cardHeight = 24;
 
         public ServiceHistory(string date)
         {
@@ -40,15 +45,18 @@ namespace ForkliftManager
             mainGrid.ColumnDefinitions.Add(col0);
             mainGrid.ColumnDefinitions.Add(col1);
             mainGrid.ColumnDefinitions.Add(col2);
+            RowDefinition row = new RowDefinition();
+            row.Height = new GridLength(24);
+            mainGrid.RowDefinitions.Add(row);
             this.Background = new SolidColorBrush(Colors.White);
             this.Width = 300;
-            this.Height = 24;
-            Rectangle serviceCard = new Rectangle();
-            serviceCard.Width = 300;
-            serviceCard.Height = 24;
-            serviceCard.StrokeThickness = 1;
-            serviceCard.Stroke = new SolidColorBrush(Colors.Gray);
-            this.Children.Add(serviceCard);
+            this.Height = cardHeight;
+            frame = new Rectangle();
+            frame.Width = 300;
+            frame.Height = cardHeight;
+            frame.StrokeThickness = 1;
+            frame.Stroke = new SolidColorBrush(Colors.Gray);
+            this.Children.Add(frame);
             this.Children.Add(mainGrid);
             TextBlock serviceDate = new TextBlock();
             serviceDate.Text = ServiceDate;
@@ -65,29 +73,52 @@ namespace ForkliftManager
             Grid.SetColumn(hoursBlock, 2);
             mainGrid.Children.Add(hoursBlock);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
-            input = new TextBox();
-            input.IsEnabled = false;
-            Grid.SetColumn(input, 2);
-            mainGrid.Children.Add(input);
-            input.KeyUp += input_KeyUp;
-            input.BorderBrush = null;
-            input.FontSize = 16;
+            //input = new TextBox();
+            //input.IsEnabled = false;
+           // Grid.SetColumn(input, 2);
+            //mainGrid.Children.Add(input);
+            //input.KeyUp += input_KeyUp;
+            //input.BorderBrush = null;
+            //input.FontSize = 16;
         }
 
         private void clickedCard(object sender, MouseButtonEventArgs e)
         {
-            input.IsEnabled = true;
-            input.Focus();
-            input.Focusable = true;
+            if (!isOpen)
+            {
+                OpenAdvanceCard();
+            }
+            else CloseAdvanceCard();
         }
 
+        private void OpenAdvanceCard()
+        {
+            isOpen = true;
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = cardHeight;
+            da.To = fullCardHeight;
+            da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+            this.BeginAnimation(Panel.HeightProperty, da);
+            frame.BeginAnimation(Rectangle.HeightProperty, da);
+        }
+
+        private void CloseAdvanceCard()
+        {
+            isOpen = false;
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = fullCardHeight;
+            da.To = cardHeight;
+            da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+            this.BeginAnimation(Panel.HeightProperty, da);
+            frame.BeginAnimation(Rectangle.HeightProperty, da);
+        }
         void input_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key.Equals(Key.Return))
             {
-                ServiceHours = input.Text;
-                input.IsEnabled = false;
-                input.Clear();
+                //ServiceHours = input.Text;
+                //input.IsEnabled = false;
+                //input.Clear();
                 updateServiceHours();
             }
         }

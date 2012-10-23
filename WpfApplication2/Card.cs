@@ -157,12 +157,12 @@ namespace ForkliftManager
             string[] monthsName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
             serviceDone = new Button();
             serviceDone.Click += serviceDone_Click;
-            serviceDone.Content = "Service done";
+            serviceDone.Content = "Service gjort";
             serviceDone.FontSize = 14;
             serviceDone.FontWeight = FontWeights.SemiBold;
             yearCheck = new Button();
             yearCheck.Click += yearCheck_Click;
-            yearCheck.Content = "Year check done";
+            yearCheck.Content = "Oppdater årskontroll";
             yearCheck.FontSize = 14;
             yearCheck.FontWeight = FontWeights.SemiBold;
             monthBox = new ComboBox();
@@ -284,7 +284,7 @@ namespace ForkliftManager
             ColumnDefinition column0 = new ColumnDefinition();
             column0.Width = new GridLength(20);
             ColumnDefinition column1 = new ColumnDefinition();
-            column1.Width = new GridLength(300);
+            column1.Width = new GridLength(350);
             ColumnDefinition column2 = new ColumnDefinition();
             ColumnDefinition columnEnd = new ColumnDefinition();
             columnEnd.Width = new GridLength(5);
