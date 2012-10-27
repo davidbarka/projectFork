@@ -18,7 +18,7 @@ namespace ForkliftManager
         private string ServiceDate { get; set; }
         private string ServiceHours { get; set; }
         private Grid mainGrid;
-       // private TextBox input;
+        private TextBox input;
         private TextBlock hoursBlock;
         private bool isOpen = false;
         private Rectangle frame;
@@ -45,6 +45,9 @@ namespace ForkliftManager
             mainGrid.ColumnDefinitions.Add(col0);
             mainGrid.ColumnDefinitions.Add(col1);
             mainGrid.ColumnDefinitions.Add(col2);
+            RowDefinition row2 = new RowDefinition();
+            row2.Height = new GridLength(24);
+            mainGrid.RowDefinitions.Add(row2);
             RowDefinition row = new RowDefinition();
             row.Height = new GridLength(24);
             mainGrid.RowDefinitions.Add(row);
@@ -73,13 +76,23 @@ namespace ForkliftManager
             Grid.SetColumn(hoursBlock, 2);
             mainGrid.Children.Add(hoursBlock);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
-            //input = new TextBox();
-            //input.IsEnabled = false;
-           // Grid.SetColumn(input, 2);
-            //mainGrid.Children.Add(input);
-            //input.KeyUp += input_KeyUp;
+            TextBlock inputLabel = new TextBlock();
+            inputLabel.Text = ServiceDate;
+            inputLabel.FontSize = 16;
+            inputLabel.FontWeight = FontWeights.SemiBold;
+            inputLabel.Foreground = new SolidColorBrush(Colors.Black);
+            inputLabel.Text = "Oppdater:";
+            Grid.SetColumn(inputLabel, 1);
+            Grid.SetRow(inputLabel, 1);
+            mainGrid.Children.Add(inputLabel);
+            input = new TextBox();
+            input.Width = 160;
+            Grid.SetColumn(input, 2);
+            Grid.SetRow(input, 1);
+            mainGrid.Children.Add(input);
+            input.KeyUp += input_KeyUp;
             //input.BorderBrush = null;
-            //input.FontSize = 16;
+            input.FontSize = 16;
         }
 
         private void clickedCard(object sender, MouseButtonEventArgs e)
@@ -112,13 +125,13 @@ namespace ForkliftManager
             this.BeginAnimation(Panel.HeightProperty, da);
             frame.BeginAnimation(Rectangle.HeightProperty, da);
         }
+
         void input_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key.Equals(Key.Return))
             {
-                //ServiceHours = input.Text;
-                //input.IsEnabled = false;
-                //input.Clear();
+                ServiceHours = input.Text;
+                input.Clear();
                 updateServiceHours();
             }
         }
