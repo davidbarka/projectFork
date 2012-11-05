@@ -18,7 +18,7 @@ namespace ForkliftManager
                                                                                 new SolidColorBrush(Colors.DarkSeaGreen), new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.CornflowerBlue) };
         private List<LinearGradientBrush> cardGradientColors = new List<LinearGradientBrush>() { new LinearGradientBrush(Colors.Red, Colors.Salmon, 60), new LinearGradientBrush(Colors.Goldenrod, Colors.Gold, 60), 
                                                                                              new LinearGradientBrush(Colors.RoyalBlue, Colors.SkyBlue, 60), new LinearGradientBrush(Colors.Green, Colors.DarkSeaGreen, 60) };
-        private List<ServiceHistory> repHistorik;
+        private List<ServiceHistory> repHistorik = new List<ServiceHistory>();
         private TextBlock interNr { get; set; }
         private TextBlock serieNr { get; set; }
         private TextBlock plassering { get; set; }
@@ -89,7 +89,7 @@ namespace ForkliftManager
 
         private void Init(string internr, string serienr, string plass, string type, int aar, int maande)
         {
-            repHistorik = new List<ServiceHistory>();
+            //repHistorik = new List<ServiceHistory>();
             interNr = new TextBlock();
             interNr.Text = internr;
             serieNr = new TextBlock();
@@ -147,7 +147,7 @@ namespace ForkliftManager
             this.MouseEnter += new MouseEventHandler(mouseEnterCard);
             this.MouseLeave += new MouseEventHandler(mouseLeaveCard);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
-            this.MouseRightButtonDown += new MouseButtonEventHandler(DeleteCard);
+            //this.MouseRightButtonDown += new MouseButtonEventHandler(DeleteCard);
 
             UpdateServiceList();
         }
@@ -277,6 +277,19 @@ namespace ForkliftManager
             Grid.SetColumn(serviceScroller, 2);
             Grid.SetRow(serviceScroller, 2);
             grid.Children.Add(serviceScroller);
+
+            Button deleteButton = new Button();
+            deleteButton.Content = "X";
+            deleteButton.FontWeight = FontWeights.ExtraBold;
+            deleteButton.Click +=new RoutedEventHandler(exitButton_MouseLeftButtonDown);
+            Grid.SetColumn(deleteButton, 0);
+            Grid.SetRow(deleteButton, 4);
+            grid.Children.Add(deleteButton);
+        }
+
+        void exitButton_MouseLeftButtonDown(object sender, RoutedEventArgs e) 
+        {
+            DeleteCard();
         }
 
         private void GridSetup()
@@ -310,7 +323,7 @@ namespace ForkliftManager
             grid.RowDefinitions.Add(row5);
         }
 
-        private void DeleteCard(object sender, MouseButtonEventArgs e)
+        private void DeleteCard()
         {
             DoubleAnimation da = new DoubleAnimation();
             da.From = this.Height;
@@ -456,7 +469,6 @@ namespace ForkliftManager
 
         public Card(SerializationInfo info, StreamingContext context)
         {
-            repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
             interNr = new TextBlock();
             interNr.Text = (string)info.GetValue("interNr", typeof(string));
             driftTimer = (int)info.GetValue("driftTimer", typeof(int));
@@ -470,7 +482,8 @@ namespace ForkliftManager
             type.Text = (string)info.GetValue("type", typeof(string));
             listRef = (List<Card>)info.GetValue("listRef", typeof(List<Card>));
             ServiceYear = (int)info.GetValue("ServiceYear", typeof(int));
-            ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));       
+            ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));
+            //repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
             Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg);
             CheckAnnualInspection();
         }
