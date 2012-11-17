@@ -122,7 +122,7 @@ namespace ForkliftManager
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
 
-            grid.ShowGridLines = true;
+            //grid.ShowGridLines = true;
 
             GridSetup();
             ComboBoxSetup();
@@ -176,6 +176,7 @@ namespace ForkliftManager
                 Grid.SetColumn(serieNr, 2);
                 grid.Children.Remove(serieTextBox);
                 grid.Children.Add(serieNr);
+                CheckAnnualInspection();
             }
             else
             {
