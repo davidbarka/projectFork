@@ -483,7 +483,7 @@ namespace ForkliftManager
             listRef = (List<Card>)info.GetValue("listRef", typeof(List<Card>));
             ServiceYear = (int)info.GetValue("ServiceYear", typeof(int));
             ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));
-            //repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
+            repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
             Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg);
             CheckAnnualInspection();
         }

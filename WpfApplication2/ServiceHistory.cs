@@ -12,7 +12,7 @@ using System.Windows.Media.Animation;
 
 namespace ForkliftManager
 {
-    [Serializable]
+    [Serializable()]
     class ServiceHistory : Grid, ISerializable
     {
         private string ServiceDate { get; set; }

@@ -39,10 +39,7 @@ namespace ForkliftManager
             UpdateStackPanelRef();
             BlurEffect blur = new BlurEffect();
             blur.Radius = 10;
-            this.Effect = blur;
-            BlurEffect blur2 = new BlurEffect();
-            blur2.Radius = 0;
-            cards[0].Effect = blur2;   
+            //this.Effect = blur;  
         }
 
         private void UpdateStackPanelRef()
