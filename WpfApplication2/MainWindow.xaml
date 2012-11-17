@@ -72,6 +72,7 @@
             <System:String>Kalmar</System:String>
             <System:String>Svetruck</System:String>
             <System:String>Plukktruck</System:String>
+            <System:String>Kombi smalgang</System:String>
         </ComboBox>
         <CheckBox x:Name="dateCheck" Content="ukjent dato" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="15" VerticalAlignment="Bottom" Foreground="White" />
     </Grid>
