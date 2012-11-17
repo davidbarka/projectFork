@@ -17,6 +17,10 @@ using System.Windows.Media.Animation;
 
 namespace ForkliftManager
 {
+    /*
+     * Made By David Barka 17.11.2012
+     * davidbarka@gmail.com
+     */
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

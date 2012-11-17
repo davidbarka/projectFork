@@ -11,6 +11,10 @@ using System.Windows.Shapes;
 
 namespace ForkliftManager
 {
+    /*
+     * Made By David Barka 17.11.2012
+     * davidbarka@gmail.com
+     */
     [Serializable()]
     class Card : System.Windows.Controls.Grid, ISerializable
     {
