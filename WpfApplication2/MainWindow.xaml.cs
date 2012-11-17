@@ -25,6 +25,7 @@ namespace ForkliftManager
         private Button[] monthsBtns;
         private int selectedMonth = DateTime.Now.Month;
         private List<Card> cards;
+        private List<ServiceHistory> ServiceList;
         private SaveFile save;
         private int listCount = 0;
 
@@ -33,10 +34,13 @@ namespace ForkliftManager
             InitializeComponent();
             save = new SaveFile();
             cards = new List<Card>();
+            ServiceList = new List<ServiceHistory>();
             Init();
             cards = save.Open();
+            ServiceList = save.OpenService();
             UpdateList();
             UpdateStackPanelRef();
+            UpdateServiceLists();
             BlurEffect blur = new BlurEffect();
             blur.Radius = 10;
             //this.Effect = blur;  
@@ -81,7 +85,36 @@ namespace ForkliftManager
 
         private void SaveCards()
         {
+            GetServiceList();
             save.Save(cards);
+            save.Save(ServiceList);
+        }
+
+        private void GetServiceList()
+        {
+            ServiceList.Clear();
+            for (int i = 0; i < cards.Count; i++)
+            {
+                for (int j = 0; j < cards[i].repHistorik.Count; j++)
+                {
+                    ServiceList.Add(cards[i].repHistorik[j]);
+                }
+            }
+        }
+
+        private void UpdateServiceLists()
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                for (int j = 0; j < ServiceList.Count; j++)
+                {
+                    if (ServiceList[j].cardID == cards[i].ID)
+	                {
+                        cards[i].repHistorik.Add(ServiceList[j]);
+	                }
+                }
+                cards[i].UpdateServiceList();
+            }
         }
 
         private void Init()

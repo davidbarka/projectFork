@@ -18,7 +18,7 @@ namespace ForkliftManager
                                                                                 new SolidColorBrush(Colors.DarkSeaGreen), new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.CornflowerBlue) };
         private List<LinearGradientBrush> cardGradientColors = new List<LinearGradientBrush>() { new LinearGradientBrush(Colors.Red, Colors.Salmon, 60), new LinearGradientBrush(Colors.Goldenrod, Colors.Gold, 60), 
                                                                                              new LinearGradientBrush(Colors.RoyalBlue, Colors.SkyBlue, 60), new LinearGradientBrush(Colors.Green, Colors.DarkSeaGreen, 60) };
-        private List<ServiceHistory> repHistorik = new List<ServiceHistory>();
+        public List<ServiceHistory> repHistorik = new List<ServiceHistory>();
         private TextBlock interNr { get; set; }
         private TextBlock serieNr { get; set; }
         private TextBlock plassering { get; set; }
@@ -45,9 +45,12 @@ namespace ForkliftManager
         private int Priority { get; set; }
         ScrollViewer serviceScroller;
         StackPanel serviceStack;
+        private static int cardID = 0;
+        public int ID { get; set; }
 
         public Card(string internr, string serienr, string plass, string type, int aar, int maande, List<Card> listRef, StackPanel stackRef)
         {
+            ID = cardID++;
             this.listRef = listRef;
             this.stackRef = stackRef;
             Init(internr, serienr, plass, type, aar, maande);
@@ -210,7 +213,7 @@ namespace ForkliftManager
         private void serviceDone_Click(object sender, RoutedEventArgs e)
         {
             if (serviceDate.Text.Equals(""))serviceDate.Text = DateTime.Now.ToShortDateString();
-            repHistorik.Add(new ServiceHistory(serviceDate.Text));
+            repHistorik.Add(new ServiceHistory(serviceDate.Text, ID));
             serviceStack.Children.Insert(0, repHistorik[repHistorik.Count-1]);
             
         }
@@ -459,8 +462,9 @@ namespace ForkliftManager
             }
         }
 
-        private void UpdateServiceList()
+        public void UpdateServiceList()
         {
+            serviceStack.Children.Clear();
             for (int i = 0; i < repHistorik.Count; i++)
             {
                 serviceStack.Children.Insert(0, repHistorik[i]);
@@ -483,7 +487,9 @@ namespace ForkliftManager
             listRef = (List<Card>)info.GetValue("listRef", typeof(List<Card>));
             ServiceYear = (int)info.GetValue("ServiceYear", typeof(int));
             ServiceMonth = (int)info.GetValue("ServiceMonth", typeof(int));
-            repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
+            ID = (int)info.GetValue("ID", typeof(int));
+            cardID = (int)info.GetValue("cardID", typeof(int));
+            //repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
             Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg);
             CheckAnnualInspection();
         }
@@ -500,7 +506,9 @@ namespace ForkliftManager
             info.AddValue("listRef", listRef);
             info.AddValue("ServiceYear", ServiceYear);
             info.AddValue("ServiceMonth", ServiceMonth);
-            info.AddValue("repHistorik", repHistorik);
+            info.AddValue("ID", ID);
+            info.AddValue("cardID", cardID);
+            //info.AddValue("repHistorik", repHistorik);
         }
 
         // helper methods form main class
@@ -535,6 +543,16 @@ namespace ForkliftManager
         public void SetStackRef(StackPanel newRef)
         {
             stackRef = newRef;
+        }
+
+        public void SetServiceList(List<ServiceHistory> listInn)
+        {
+            repHistorik = listInn;
+        }
+
+        public List<ServiceHistory> GetServiceList()
+        {
+            return repHistorik;
         }
     }
 }

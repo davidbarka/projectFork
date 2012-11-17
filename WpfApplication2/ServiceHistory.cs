@@ -24,11 +24,13 @@ namespace ForkliftManager
         private Rectangle frame;
         private int fullCardHeight = 50;
         private int cardHeight = 24;
+        public int cardID { get; set; }
 
-        public ServiceHistory(string date)
+        public ServiceHistory(string date, int CardID)
         {
             ServiceDate = date;
             ServiceHours = "0";
+            cardID = CardID;
             Init();
         }
 
@@ -142,10 +144,11 @@ namespace ForkliftManager
         }
 
 
-         public ServiceHistory(SerializationInfo info, StreamingContext context)
+        public ServiceHistory(SerializationInfo info, StreamingContext context)
         {
             ServiceDate = (string)info.GetValue("ServiceYear", typeof(string));
             ServiceHours = (string)info.GetValue("ServiceHours", typeof(string));
+            cardID = (int)info.GetValue("cardID", typeof(int));
             Init();
         }
 
@@ -153,6 +156,7 @@ namespace ForkliftManager
         {
             info.AddValue("ServiceYear", ServiceDate);
             info.AddValue("ServiceHours", ServiceHours);
+            info.AddValue("cardID", cardID);
         }
     }
 }
