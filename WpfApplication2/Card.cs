@@ -47,6 +47,8 @@ namespace ForkliftManager
         StackPanel serviceStack;
         private static int cardID = 0;
         public int ID { get; set; }
+        private TextBox plassTextBox, serieTextBox;
+        private bool editMode = false;
 
         public Card(string internr, string serienr, string plass, string type, int aar, int maande, List<Card> listRef, StackPanel stackRef)
         {
@@ -92,7 +94,8 @@ namespace ForkliftManager
 
         private void Init(string internr, string serienr, string plass, string type, int aar, int maande)
         {
-            //repHistorik = new List<ServiceHistory>();
+            plassTextBox = new TextBox();
+            serieTextBox = new TextBox();
             interNr = new TextBlock();
             interNr.Text = internr;
             serieNr = new TextBlock();
@@ -119,7 +122,7 @@ namespace ForkliftManager
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
 
-            //grid.ShowGridLines = true;
+            grid.ShowGridLines = true;
 
             GridSetup();
             ComboBoxSetup();
@@ -150,9 +153,45 @@ namespace ForkliftManager
             this.MouseEnter += new MouseEventHandler(mouseEnterCard);
             this.MouseLeave += new MouseEventHandler(mouseLeaveCard);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
-            //this.MouseRightButtonDown += new MouseButtonEventHandler(DeleteCard);
+            this.MouseRightButtonDown += new MouseButtonEventHandler(EditCard);
 
             UpdateServiceList();
+        }
+
+        private void EditCard(object sender, MouseButtonEventArgs e)
+        {
+           
+            if (editMode)
+            {
+                plassering.Text = plassTextBox.Text.ToUpper();
+                serieNr.Text = serieTextBox.Text;
+                editMode = false;
+                Grid.SetRow(plassering, 1);
+                Grid.SetColumn(plassering, 2);
+                grid.Children.Remove(plassTextBox);
+                grid.Children.Add(plassering);
+
+
+                Grid.SetRow(serieNr, 4);
+                Grid.SetColumn(serieNr, 2);
+                grid.Children.Remove(serieTextBox);
+                grid.Children.Add(serieNr);
+            }
+            else
+            {
+                plassTextBox.Text = plassering.Text;
+                serieTextBox.Text = serieNr.Text;
+                editMode = true;
+                Grid.SetRow(plassTextBox, 1);
+                Grid.SetColumn(plassTextBox, 2);
+                grid.Children.Remove(plassering);
+                grid.Children.Add(plassTextBox);
+
+                Grid.SetRow(serieTextBox, 4);
+                Grid.SetColumn(serieTextBox, 2);
+                grid.Children.Remove(serieNr);
+                grid.Children.Add(serieTextBox);
+            }
         }
 
         private void ComboBoxSetup()
