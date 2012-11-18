@@ -32,6 +32,7 @@ namespace ForkliftManager
         private List<ServiceHistory> ServiceList;
         private SaveFile save;
         private int listCount = 0;
+        private bool isMenuShowing = true;
 
         public MainWindow()
         {
@@ -243,5 +244,89 @@ namespace ForkliftManager
             SaveCards();
         }
 
+        private void showSideMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation da = new DoubleAnimation();
+            if (isMenuShowing)
+            {
+                da.From = 206;
+                da.To = 15;
+                da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+                SideMenu.BeginAnimation(ColumnDefinition.MinWidthProperty, da);
+
+                RegNummer.Width = 15;
+                SerieNr.Width = 15;
+                plassering.Width = 15;
+                Merknad.Width = 15;
+                year.Width = 15;
+                Type.Width = 15;
+                monthGrid.Width = 15;
+                label.Width = 15;
+                aarskontroll.Width = 15;
+                interLabel.Width = 15;
+                serieLabel.Width = 15;
+                plassLabel.Width = 15;
+                dateCheck.Width = 15;
+                AddBtn.Width = 15;
+
+                RegNummer.Opacity = 0;
+                SerieNr.Opacity = 0;
+                plassering.Opacity = 0;
+                Merknad.Opacity = 0;
+                year.Opacity = 0;
+                Type.Opacity = 0;
+                monthGrid.Opacity = 0;
+                label.Opacity = 0;
+                aarskontroll.Opacity = 0;
+                interLabel.Opacity = 0;
+                serieLabel.Opacity = 0;
+                plassLabel.Opacity = 0;
+                dateCheck.Opacity = 0;
+                AddBtn.Opacity = 0;
+                isMenuShowing = false;
+
+                showSideMenu.Content = ">>";
+            }
+            else
+            {
+                da.From = 30;
+                da.To = 206;
+                da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+                SideMenu.BeginAnimation(ColumnDefinition.MinWidthProperty, da);
+
+                RegNummer.Width = 186;
+                SerieNr.Width = 186;
+                plassering.Width = 186;
+                Merknad.Width = 186;
+                year.Width = 186;
+                Type.Width = 186;
+                monthGrid.Width = 186;
+                label.Width = 128;
+                aarskontroll.Width = 186;
+                interLabel.Width = 186;
+                serieLabel.Width = 186;
+                plassLabel.Width = 186;
+                dateCheck.Width = 186;
+                AddBtn.Width = 97;
+
+                RegNummer.Opacity = 100;
+                SerieNr.Opacity = 100;
+                plassering.Opacity = 100;
+                Merknad.Opacity = 100;
+                year.Opacity = 100;
+                Type.Opacity = 100;
+                monthGrid.Opacity = 100;
+                label.Opacity = 100;
+                aarskontroll.Opacity = 100;
+                interLabel.Opacity = 100;
+                serieLabel.Opacity = 100;
+                plassLabel.Opacity = 100;
+                dateCheck.Opacity = 100;
+                AddBtn.Opacity = 100;
+                isMenuShowing = false;
+                isMenuShowing = true;
+                showSideMenu.Content = "<<";
+            }
+        }
     }
 }
