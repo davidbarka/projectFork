@@ -149,6 +149,7 @@ namespace ForkliftManager
             }
 
             monthsBtns[DateTime.Now.Month - 1].IsEnabled = false;
+            SetButtonImg(false);
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
@@ -249,25 +250,21 @@ namespace ForkliftManager
             DoubleAnimation da = new DoubleAnimation();
             if (isMenuShowing)
             {
-                da.From = 206;
-                da.To = 15;
-                da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
-                SideMenu.BeginAnimation(ColumnDefinition.MinWidthProperty, da);
-
-                RegNummer.Width = 15;
-                SerieNr.Width = 15;
-                plassering.Width = 15;
-                Merknad.Width = 15;
-                year.Width = 15;
-                Type.Width = 15;
-                monthGrid.Width = 15;
-                label.Width = 15;
-                aarskontroll.Width = 15;
-                interLabel.Width = 15;
-                serieLabel.Width = 15;
-                plassLabel.Width = 15;
-                dateCheck.Width = 15;
-                AddBtn.Width = 15;
+                HideAnimation(RegNummer, 186, 15);
+                HideAnimation(SerieNr, 186, 15);
+                HideAnimation(plassering, 186, 15);
+                HideAnimation(Merknad, 186, 15);
+                HideAnimation(year, 186, 15);
+                HideAnimation(Type, 186, 15);
+                HideAnimation(aarskontroll, 186, 15);
+                HideAnimation(interLabel, 186, 15);
+                HideAnimation(serieLabel, 186, 15);
+                HideAnimation(plassLabel, 186, 15);
+                HideAnimation(dateCheck, 186, 15);
+                HideAnimation(AddBtn, 97, 15);
+                HideAnimation(label, 128, 15);
+                DoubleAnimation da2 = new DoubleAnimation(186, 15, TimeSpan.FromMilliseconds(200));
+                monthGrid.BeginAnimation(Grid.WidthProperty, da2);
 
                 RegNummer.Opacity = 0;
                 SerieNr.Opacity = 0;
@@ -284,8 +281,11 @@ namespace ForkliftManager
                 dateCheck.Opacity = 0;
                 AddBtn.Opacity = 0;
                 isMenuShowing = false;
-
-                showSideMenu.Content = ">>";
+                da.From = 206;
+                da.To = 15;
+                da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+                SideMenu.BeginAnimation(ColumnDefinition.MinWidthProperty, da);
+                SetButtonImg(true);
             }
             else
             {
@@ -294,20 +294,21 @@ namespace ForkliftManager
                 da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
                 SideMenu.BeginAnimation(ColumnDefinition.MinWidthProperty, da);
 
-                RegNummer.Width = 186;
-                SerieNr.Width = 186;
-                plassering.Width = 186;
-                Merknad.Width = 186;
-                year.Width = 186;
-                Type.Width = 186;
-                monthGrid.Width = 186;
-                label.Width = 128;
-                aarskontroll.Width = 186;
-                interLabel.Width = 186;
-                serieLabel.Width = 186;
-                plassLabel.Width = 186;
-                dateCheck.Width = 186;
-                AddBtn.Width = 97;
+                HideAnimation(RegNummer, 15, 186);
+                HideAnimation(SerieNr, 15, 186);
+                HideAnimation(plassering, 15, 186);
+                HideAnimation(Merknad, 15, 186);
+                HideAnimation(year, 15, 186);
+                HideAnimation(Type, 15, 186);
+                HideAnimation(aarskontroll, 15, 186);
+                HideAnimation(interLabel, 15, 186);
+                HideAnimation(serieLabel, 15, 186);
+                HideAnimation(plassLabel, 15, 186);
+                HideAnimation(dateCheck, 15, 186);
+                HideAnimation(AddBtn, 15, 97);
+                HideAnimation(label, 15, 128);
+                DoubleAnimation da2 = new DoubleAnimation(15, 186, TimeSpan.FromMilliseconds(200));
+                monthGrid.BeginAnimation(Grid.WidthProperty, da2);
 
                 RegNummer.Opacity = 100;
                 SerieNr.Opacity = 100;
@@ -323,10 +324,36 @@ namespace ForkliftManager
                 plassLabel.Opacity = 100;
                 dateCheck.Opacity = 100;
                 AddBtn.Opacity = 100;
-                isMenuShowing = false;
+
                 isMenuShowing = true;
-                showSideMenu.Content = "<<";
+                SetButtonImg(false);
             }
+        }
+
+        private void HideAnimation(Control AnimationObject, double start, double end)
+        {
+            DoubleAnimation da = new DoubleAnimation(start, end, TimeSpan.FromMilliseconds(200));
+            AnimationObject.BeginAnimation(Control.WidthProperty, da);
+        }
+
+        private void SetButtonImg(bool isRight)
+        {
+            Uri uri;
+            if (isRight)
+            {
+                uri = new Uri("pack://application:,,/Bilder/right.png");
+            }
+            else
+            {
+                uri = new Uri("pack://application:,,/Bilder/left.png");
+            }
+            BitmapImage bitmap = new BitmapImage(uri);
+
+            Image img = new Image();
+            img.Source = bitmap;
+            img.Stretch = Stretch.Uniform;
+
+            showSideMenu.Content = img;
         }
     }
 }

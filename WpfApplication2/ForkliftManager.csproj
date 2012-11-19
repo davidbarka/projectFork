@@ -137,10 +137,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bg.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="toyota_forklift383.jpg" />
+    <Resource Include="Bilder\bg.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="forklift manager.ico" />
@@ -166,6 +163,10 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\left.png" />
+    <Resource Include="Bilder\right.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

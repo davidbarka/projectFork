@@ -158,7 +158,7 @@ namespace ForkliftManager
             this.MouseLeave += new MouseEventHandler(mouseLeaveCard);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
             this.MouseRightButtonDown += new MouseButtonEventHandler(EditCard);
-
+            CheckSerieAndPlass();
             UpdateServiceList();
         }
 
@@ -197,6 +197,19 @@ namespace ForkliftManager
                 grid.Children.Remove(serieNr);
                 grid.Children.Add(serieTextBox);
             }
+            CheckSerieAndPlass();
+        }
+
+        private void CheckSerieAndPlass()
+        {
+            if (plassering.Text == "")
+            {
+                plassering.Text = "Plassering";
+            }
+            if (serieNr.Text == "")
+	        {
+                serieNr.Text = "Serienummer";
+	        }
         }
 
         private void ComboBoxSetup()
@@ -204,7 +217,7 @@ namespace ForkliftManager
             string[] monthsName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
             serviceDone = new Button();
             serviceDone.Click += serviceDone_Click;
-            serviceDone.Content = "Service gjort";
+            serviceDone.Content = "Legg til service";
             serviceDone.FontSize = 14;
             serviceDone.FontWeight = FontWeights.SemiBold;
             yearCheck = new Button();
@@ -264,27 +277,35 @@ namespace ForkliftManager
 
         void yearCheck_Click(object sender, RoutedEventArgs e)
         {
-            if (yearBox.SelectedIndex == yearReg - 2000 && monthBox.SelectedIndex == monthReg - 1)
+            if (yearBox.SelectedIndex == yearReg - 2000 && monthBox.SelectedIndex == monthReg-1)
             {
                 yearReg++;
                 yearBox.SelectedIndex++;
             }
-            else if (yearBox.SelectedIndex > 0 && monthBox.SelectedIndex < 0)
-            {
-                yearReg = (int)yearBox.SelectedItem;
-                monthReg = 1;
-                monthBox.SelectedIndex = 1;
-            }
-            else if (monthBox.SelectedIndex > 0 && yearBox.SelectedIndex < 0)
+            else if (yearBox.SelectedIndex <= 0 && monthBox.SelectedIndex <= 0)
             {
                 yearReg = DateTime.Now.Year;
                 yearBox.SelectedIndex = DateTime.Now.Year - 2000;
-                monthReg = monthBox.SelectedIndex + 1;
+                monthReg = 1;
+                monthBox.SelectedIndex = 0;
+            }
+            else if (monthBox.SelectedIndex > 0 && yearBox.SelectedIndex <= 0)
+            {
+                yearReg = DateTime.Now.Year;
+                yearBox.SelectedIndex = DateTime.Now.Year - 2000;
+                monthReg = monthBox.SelectedIndex+1;
+            }
+            else if (monthBox.SelectedIndex <= 0 && yearBox.SelectedIndex > 0)
+            {
+                yearReg = DateTime.Now.Year;
+                yearBox.SelectedIndex = DateTime.Now.Year - 2000;
+                monthReg = 1;
+                monthBox.SelectedIndex = 0;
             }
             else
             {
                 yearReg = (int)yearBox.SelectedItem;
-                monthReg = monthBox.SelectedIndex + 1;
+                monthReg = monthBox.SelectedIndex+1;
             }
             CheckAnnualInspection();
         }
@@ -480,7 +501,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[WARNING];//cardColors[WARNING];
                 Priority = 2;
             }
-            else if (plassering.Text.Equals("") || serieNr.Text.Equals(""))
+            else if (plassering.Text.Equals("") || serieNr.Text.Equals("") || plassering.Text.Equals("Plassering") || serieNr.Text.Equals("Serienummer"))
             {
                 this.Background = cardGradientColors[OK];//cardColors[OK];
                 Priority = 4;
