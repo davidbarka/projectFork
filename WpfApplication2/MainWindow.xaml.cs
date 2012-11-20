@@ -46,9 +46,7 @@ namespace ForkliftManager
             UpdateList();
             UpdateStackPanelRef();
             UpdateServiceLists();
-            BlurEffect blur = new BlurEffect();
-            blur.Radius = 10;
-            //this.Effect = blur;  
+            showSideMenu_Click(null,null);
         }
 
         private void UpdateStackPanelRef()

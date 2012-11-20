@@ -168,7 +168,7 @@ namespace ForkliftManager
             if (editMode)
             {
                 plassering.Text = plassTextBox.Text.ToUpper();
-                serieNr.Text = serieTextBox.Text;
+                serieNr.Text = serieTextBox.Text.ToUpper();
                 editMode = false;
                 Grid.SetRow(plassering, 1);
                 Grid.SetColumn(plassering, 2);
@@ -204,11 +204,11 @@ namespace ForkliftManager
         {
             if (plassering.Text == "")
             {
-                plassering.Text = "Plassering";
+                plassering.Text = "PLASSERING";
             }
             if (serieNr.Text == "")
 	        {
-                serieNr.Text = "Serienummer";
+                serieNr.Text = "SERIENUMMER";
 	        }
         }
 
@@ -341,6 +341,8 @@ namespace ForkliftManager
 
             serviceScroller = new ScrollViewer();
             serviceStack = new StackPanel();
+            serviceStack.Background = new SolidColorBrush(Colors.Black);
+            serviceStack.Background.Opacity = 0.1;
             serviceScroller.Content = serviceStack;
             Grid.SetColumn(serviceScroller, 2);
             Grid.SetRow(serviceScroller, 2);
@@ -400,7 +402,7 @@ namespace ForkliftManager
             this.BeginAnimation(Panel.HeightProperty, da);
             frame.BeginAnimation(Panel.HeightProperty, da);
             isOpen = false;
-            if (System.Windows.MessageBox.Show("Do you want to delete this card?", "Delete Card?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (System.Windows.MessageBox.Show("Vil du slette dette kortet?", "Slette kort?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 listRef.Remove(this);
                 UpdateList();
@@ -501,7 +503,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[WARNING];//cardColors[WARNING];
                 Priority = 2;
             }
-            else if (plassering.Text.Equals("") || serieNr.Text.Equals("") || plassering.Text.Equals("Plassering") || serieNr.Text.Equals("Serienummer"))
+            else if (plassering.Text.Equals("") || serieNr.Text.Equals("") || plassering.Text.Equals("Plassering",StringComparison.OrdinalIgnoreCase) || serieNr.Text.Equals("Serienummer",StringComparison.OrdinalIgnoreCase))
             {
                 this.Background = cardGradientColors[OK];//cardColors[OK];
                 Priority = 4;
@@ -618,6 +620,11 @@ namespace ForkliftManager
         public List<ServiceHistory> GetServiceList()
         {
             return repHistorik;
+        }
+
+        public void SetCardWidth(int newWidth)
+        {
+            cardWidth = newWidth;
         }
     }
 }
