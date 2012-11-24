@@ -19,10 +19,10 @@
         <Label x:Name="interLabel" Content="internnummer" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
         <Label x:Name="plassLabel" Content="plassering" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="31" Width="106" Grid.Row="1"/>
         <Label x:Name="serieLabel" Content="serienummer" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
-        <Label x:Name="labelSearch" Content="søk" Margin="0,-3,136,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="35" Grid.Column="1" HorizontalAlignment="Right" Width="69"/>
-        <Label x:Name="label" Content="legg til" HorizontalAlignment="Left" Margin="0,-9,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Grid.RowSpan="2" Height="58" Width="128" />
+        <Label x:Name="labelSearch" Content="søk" Margin="0,-2,136,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="35" Grid.Column="1" HorizontalAlignment="Right" Width="69"/>
+        <Label x:Name="label" Content="ny truck" HorizontalAlignment="Left" Margin="0,-9,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Grid.RowSpan="2" Height="58" Width="152" />
         <TextBox x:Name="RegNummer" HorizontalAlignment="Left" Height="26" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Internnummer" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
-        <Button x:Name="AddBtn" Content="Add" Margin="0,0,10,10" Click="AddBtn_Click" Grid.Row="1" FontSize="18" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="97"/>
+        <Button x:Name="AddBtn" Content="legg til" Margin="0,0,10,10" Click="AddBtn_Click" Grid.Row="1" FontSize="18" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="97" FontWeight="Bold"/>
         <Grid x:Name="listView" Margin="0,0,-2,21" Grid.Row="1" Grid.Column="1">
             <ScrollViewer x:Name="scroller" Margin="0,0,10,0">
                 <StackPanel x:Name="cardStack"/>
@@ -30,7 +30,7 @@
         </Grid>
         <TextBox x:Name="SerieNr" HorizontalAlignment="Left" Height="26" Margin="10,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Serienummer" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
         <TextBox x:Name="plassering" HorizontalAlignment="Left" Height="26" Margin="10,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Plassering" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
-        <TextBox x:Name="search" Grid.Column="1" Height="23" Margin="0,4,10,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Search" FontSize="16" KeyUp="search_KeyUp" HorizontalAlignment="Right" Width="143"/>
+        <TextBox x:Name="search" Grid.Column="1" Height="23" Margin="0,6,10,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Search" FontSize="16" KeyUp="search_KeyUp" HorizontalAlignment="Right" Width="143"/>
         <ComboBox x:Name="year" HorizontalAlignment="Left" Margin="10,0,0,215" Grid.Row="1" Width="186" ToolTip="Year" FontSize="16" BorderBrush="White" Height="26" VerticalAlignment="Bottom">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -73,11 +73,11 @@
             <System:String>Plukktruck</System:String>
             <System:String>Kombi smalgang</System:String>
         </ComboBox>
-        <CheckBox x:Name="dateCheck" Content="ukjent dato" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="16" VerticalAlignment="Bottom" Foreground="White" />
+        <CheckBox x:Name="dateCheck" Content="ukjent dato" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="16" VerticalAlignment="Bottom" Foreground="White" FontWeight="Bold" />
         <Button x:Name="showSideMenu" Content="" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Top" Width="35" Height="27" Foreground="White" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="16" Click="showSideMenu_Click" Background="{x:Null}" ToolTip="Vis meny" BorderThickness="0"/>
-        <Button x:Name="closeAll" Content="Lukk alle" Grid.Column="1" HorizontalAlignment="Left" Margin="14,3,0,0" VerticalAlignment="Top" Width="76" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="closeAll_Click"/>
-        <TextBlock x:Name="antallTrucksLabel" Grid.Column="1" HorizontalAlignment="Left" Margin="106,7,0,8" TextWrapping="Wrap" Text="antall trucks:" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
-        <TextBlock x:Name="antallTrucks" Grid.Column="1" HorizontalAlignment="Left" Margin="224,7,0,5" TextWrapping="Wrap" Text="1" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
-        <Button x:Name="view" Content="View" Grid.Column="1" Margin="261,5,475,7" Click="view_Click" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name="closeAll" Content="lukk alle" Grid.Column="1" HorizontalAlignment="Left" Margin="95,3,0,0" VerticalAlignment="Top" Width="76" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="closeAll_Click"/>
+        <TextBlock x:Name="antallTrucksLabel" Grid.Column="1" HorizontalAlignment="Left" Margin="187,7,0,8" TextWrapping="Wrap" Text="antall trucks:" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
+        <TextBlock x:Name="antallTrucks" Grid.Column="1" HorizontalAlignment="Left" Margin="291,8,0,4" TextWrapping="Wrap" Text="1" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
+        <Button x:Name="view" Content="kompakt" Margin="10,3,0,6" Click="view_Click" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="74" Grid.Column="1" ToolTip="Endre visning på kortene"/>
     </Grid>
 </Window>

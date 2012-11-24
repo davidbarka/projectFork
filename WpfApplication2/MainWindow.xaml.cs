@@ -241,7 +241,7 @@ namespace ForkliftManager
                     temp.Add(cards[i]);
                 }
             }
-
+            antallTrucks.Text = temp.Count.ToString();
             cardStack.Children.Clear();
             for (int i = temp.Count-1; i > -1; i--)
             {
@@ -276,7 +276,7 @@ namespace ForkliftManager
                 HideAnimation(plassLabel, 186, 15);
                 HideAnimation(dateCheck, 186, 15);
                 HideAnimation(AddBtn, 97, 15);
-                HideAnimation(label, 128, 15);
+                HideAnimation(label, 152, 15);
                 DoubleAnimation da2 = new DoubleAnimation(186, 15, TimeSpan.FromMilliseconds(200));
                 monthGrid.BeginAnimation(Grid.WidthProperty, da2);
 
@@ -320,7 +320,7 @@ namespace ForkliftManager
                 HideAnimation(plassLabel, 15, 186);
                 HideAnimation(dateCheck, 15, 186);
                 HideAnimation(AddBtn, 15, 97);
-                HideAnimation(label, 15, 128);
+                HideAnimation(label, 15, 152);
                 DoubleAnimation da2 = new DoubleAnimation(15, 186, TimeSpan.FromMilliseconds(200));
                 monthGrid.BeginAnimation(Grid.WidthProperty, da2);
 
@@ -385,8 +385,18 @@ namespace ForkliftManager
                 smallView = true;
                 for (int i = 0; i < cards.Count; i++)
                 {
-                    cards[i].SetHeight(35);
+                    cards[i].SetHeight(30);
                 }
+                view.Content = "normal";
+            }
+            else
+            {
+                smallView = false;
+                for (int i = 0; i < cards.Count; i++)
+                {
+                    cards[i].SetHeight(50);
+                }
+                view.Content = "kompakt";
             }
         }
     }

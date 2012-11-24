@@ -650,7 +650,15 @@ namespace ForkliftManager
 
         internal void SetHeight(int p)
         {
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = this.Height;
+            da.To = p;
+            da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+            this.BeginAnimation(Panel.HeightProperty, da);
+            frame.BeginAnimation(Rectangle.HeightProperty, da);
             normalCardHeight = p;
+            frame.Height = p;
+            isOpen = false;
         }
     }
 }
