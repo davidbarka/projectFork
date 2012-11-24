@@ -71,6 +71,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\packages\MahApps.Metro.0.9.9.49-ALPHA\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -167,6 +169,12 @@
   <ItemGroup>
     <Resource Include="Bilder\left.png" />
     <Resource Include="Bilder\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\close.png" />
+    <Resource Include="Bilder\full.png" />
+    <Resource Include="Bilder\min.png" />
+    <Resource Include="Bilder\small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

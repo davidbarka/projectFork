@@ -55,13 +55,14 @@ namespace ForkliftManager
         private TextBox plassTextBox, serieTextBox;
         private bool editMode = false;
         private TextBlock antallTrucksRef;
+        private TextBox merknaderBox { get; set; }
 
-        public Card(string internr, string serienr, string plass, string type, int aar, int maande, List<Card> listRef, StackPanel stackRef)
+        public Card(string internr, string serienr, string plass, string type, int aar, int maande, string merknad, List<Card> listRef, StackPanel stackRef)
         {
             ID = cardID++;
             this.listRef = listRef;
             this.stackRef = stackRef;
-            Init(internr, serienr, plass, type, aar, maande);
+            Init(internr, serienr, plass, type, aar, maande, merknad);
             CardAppear();
             CheckAnnualInspection();
         }
@@ -106,7 +107,7 @@ namespace ForkliftManager
 
         }
 
-        private void Init(string internr, string serienr, string plass, string type, int aar, int maande)
+        private void Init(string internr, string serienr, string plass, string type, int aar, int maande, string merknad)
         {
             plassTextBox = new TextBox();
             serieTextBox = new TextBox();
@@ -118,6 +119,8 @@ namespace ForkliftManager
             plassering.Text = plass;
             this.type = new TextBlock();
             this.type.Text = type;
+            merknaderBox = new TextBox();
+            merknaderBox.Text = merknad;
             yearReg = aar;
             monthReg = maande;
 
@@ -167,9 +170,14 @@ namespace ForkliftManager
             this.MouseEnter += new MouseEventHandler(mouseEnterCard);
             this.MouseLeave += new MouseEventHandler(mouseLeaveCard);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(clickedCard);
-            this.MouseRightButtonDown += new MouseButtonEventHandler(EditCard);
+            this.MouseRightButtonDown += new MouseButtonEventHandler(showMenu);
             CheckSerieAndPlass();
             UpdateServiceList();
+        }
+
+        private void showMenu(object sender, MouseButtonEventArgs e)
+        {
+            EditCard();
         }
 
         public void UpdateServiceListRef()
@@ -180,7 +188,7 @@ namespace ForkliftManager
             }
         }
 
-        private void EditCard(object sender, MouseButtonEventArgs e)
+        private void EditCard()
         {
            
             if (editMode)
@@ -339,15 +347,23 @@ namespace ForkliftManager
             serviceCol1.Width = new GridLength(200);
             ColumnDefinition serviceCol2 = new ColumnDefinition();
 
+            merknaderBox.AcceptsReturn = true;
+            merknaderBox.TextWrapping = TextWrapping.Wrap;
+            merknaderBox.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+            merknaderBox.BorderBrush = null;
+            merknaderBox.Background = new SolidColorBrush(Colors.White);
+            merknaderBox.FontSize = 16;
+            merknaderBox.FontWeight = FontWeights.DemiBold;
+            merknaderBox.Background.Opacity = 0.4;
+            Grid.SetColumn(merknaderBox, 1);
+            Grid.SetRow(merknaderBox, 2);
+            grid.Children.Add(merknaderBox);
 
             CheckGrid.ColumnDefinitions.Add(checkCol1);
             CheckGrid.ColumnDefinitions.Add(checkCol2);
             CheckGrid.ColumnDefinitions.Add(checkCol3);
             ServiceGrid.ColumnDefinitions.Add(serviceCol1);
             ServiceGrid.ColumnDefinitions.Add(serviceCol2);
-
-            //ServiceGrid.ShowGridLines = true;
-            //CheckGrid.ShowGridLines = true;
 
             Grid.SetColumn(CheckGrid, 1);
             Grid.SetRow(CheckGrid, 3);
@@ -576,7 +592,8 @@ namespace ForkliftManager
             ID = (int)info.GetValue("ID", typeof(int));
             cardID = (int)info.GetValue("cardID", typeof(int));
             //repHistorik = (List<ServiceHistory>)info.GetValue("repHistorik", typeof(List<ServiceHistory>));
-            Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg);
+            string merk = (string)info.GetValue("merknaderBox", typeof(string));
+            Init(interNr.Text, serieNr.Text, plassering.Text, type.Text, yearReg, monthReg, merk);
             CheckAnnualInspection();
         }
 
@@ -594,7 +611,7 @@ namespace ForkliftManager
             info.AddValue("ServiceMonth", ServiceMonth);
             info.AddValue("ID", ID);
             info.AddValue("cardID", cardID);
-            //info.AddValue("repHistorik", repHistorik);
+            info.AddValue("merknaderBox", merknaderBox.Text);
         }
 
         // helper methods form main class

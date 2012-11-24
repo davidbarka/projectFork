@@ -171,7 +171,7 @@ namespace ForkliftManager
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            string internr, serienr = "", plass = "", type;
+            string internr, serienr = "", plass = "", type, merknader = "";
             int aar =0, maande =0;
             if (RegNummer.GetLineText(0).Equals(""))
             {
@@ -194,7 +194,8 @@ namespace ForkliftManager
                     maande = GetSelectedMonth();
                 }
                 type = (string)Type.SelectedItem;
-                cards.Add(new Card(internr, serienr, plass, type, aar, maande, cards, cardStack));
+                merknader = Merknad.Text;
+                cards.Add(new Card(internr, serienr, plass, type, aar, maande, merknader, cards, cardStack));
                 cards[cards.Count - 1].SetAntallTrucksRef(antallTrucks);
                 cardStack.Children.Insert(0, cards[cards.Count - 1]);
                 SaveCards();

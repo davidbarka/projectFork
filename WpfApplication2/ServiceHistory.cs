@@ -46,7 +46,7 @@ namespace ForkliftManager
         {
             mainGrid = new Grid();
             ColumnDefinition col0 = new ColumnDefinition();
-            col0.Width = new GridLength(15);
+            col0.Width = new GridLength(20);
             ColumnDefinition col1 = new ColumnDefinition();
             col1.Width = new GridLength(100);
             ColumnDefinition col2 = new ColumnDefinition();
@@ -64,10 +64,10 @@ namespace ForkliftManager
             RowDefinition row3 = new RowDefinition();
             mainGrid.RowDefinitions.Add(row3);
             this.Background = new SolidColorBrush(Colors.White);
-            this.Width = 300;
+            this.Width = 330;
             this.Height = cardHeight;
             frame = new Rectangle();
-            frame.Width = 300;
+            frame.Width = 330;
             frame.Height = cardHeight;
             frame.StrokeThickness = 1;
             frame.Stroke = new SolidColorBrush(Colors.Gray);
@@ -184,9 +184,7 @@ namespace ForkliftManager
         {
             if (e.Key.Equals(Key.Return))
             {
-                ServiceHours = input.Text;
-                input.Clear();
-                updateServiceHours();
+                CloseAdvanceCard();
             }
         }
 
