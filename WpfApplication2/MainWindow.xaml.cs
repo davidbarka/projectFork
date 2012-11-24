@@ -33,6 +33,7 @@ namespace ForkliftManager
         private SaveFile save;
         private int listCount = 0;
         private bool isMenuShowing = true;
+        private bool smallView = false;
 
         public MainWindow()
         {
@@ -44,9 +45,19 @@ namespace ForkliftManager
             cards = save.Open();
             ServiceList = save.OpenService();
             UpdateList();
+            SetAntallTrucks();
             UpdateStackPanelRef();
+            UpdateAntallTrucksRef();
             UpdateServiceLists();
             showSideMenu_Click(null,null);
+        }
+
+        private void UpdateAntallTrucksRef()
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                cards[i].SetAntallTrucksRef(antallTrucks);
+            }
         }
 
         private void UpdateStackPanelRef()
@@ -148,6 +159,12 @@ namespace ForkliftManager
 
             monthsBtns[DateTime.Now.Month - 1].IsEnabled = false;
             SetButtonImg(false);
+            SetAntallTrucks();
+        }
+
+        public void SetAntallTrucks()
+        {
+            antallTrucks.Text = cards.Count.ToString();
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
@@ -176,8 +193,10 @@ namespace ForkliftManager
                 }
                 type = (string)Type.SelectedItem;
                 cards.Add(new Card(internr, serienr, plass, type, aar, maande, cards, cardStack));
+                cards[cards.Count - 1].SetAntallTrucksRef(antallTrucks);
                 cardStack.Children.Insert(0, cards[cards.Count - 1]);
                 SaveCards();
+                SetAntallTrucks();
             }
         }
  
@@ -197,8 +216,6 @@ namespace ForkliftManager
             }
         }
 
-
-
         private int GetSelectedMonth()
         {
             for (int i = 0; i < monthsBtns.Length; i++)
@@ -210,7 +227,6 @@ namespace ForkliftManager
             }
             return 1;
         }
-
 
         private void search_KeyUp(object sender, KeyEventArgs e)
         {
@@ -352,6 +368,26 @@ namespace ForkliftManager
             img.Stretch = Stretch.Uniform;
 
             showSideMenu.Content = img;
+        }
+
+        private void closeAll_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                cards[i].CloseAllCardsExternal();
+            }
+        }
+
+        private void view_Click(object sender, RoutedEventArgs e)
+        {
+            if (!smallView)
+            {
+                smallView = true;
+                for (int i = 0; i < cards.Count; i++)
+                {
+                    cards[i].SetHeight(35);
+                }
+            }
         }
     }
 }

@@ -124,6 +124,12 @@ namespace ForkliftManager
 
         private void CloseAdvanceCard()
         {
+            if (input.Text != "")
+            {
+                ServiceHours = input.Text;
+                input.Clear();
+                updateServiceHours();
+            }
             isOpen = false;
             DoubleAnimation da = new DoubleAnimation();
             da.From = fullCardHeight;

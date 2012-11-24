@@ -37,7 +37,8 @@ namespace ForkliftManager
         Grid CheckGrid { get; set; }
         Grid ServiceGrid { get; set; }
         private int cardWidth = 750;
-        private int cardHeight = 400;
+        private int advanceCardHeight = 400;
+        private int normalCardHeight = 50;
         private Rectangle frame { get; set; }
         private List<Card> listRef;
         private StackPanel stackRef;
@@ -53,6 +54,7 @@ namespace ForkliftManager
         public int ID { get; set; }
         private TextBox plassTextBox, serieTextBox;
         private bool editMode = false;
+        private TextBlock antallTrucksRef;
 
         public Card(string internr, string serienr, string plass, string type, int aar, int maande, List<Card> listRef, StackPanel stackRef)
         {
@@ -68,19 +70,27 @@ namespace ForkliftManager
         {
             isOpen = true;
             DoubleAnimation da = new DoubleAnimation();
-            da.From = 50;
-            da.To = cardHeight;
+            da.From = normalCardHeight;
+            da.To = advanceCardHeight;
             da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             this.BeginAnimation(Panel.HeightProperty, da);
             frame.BeginAnimation(Rectangle.HeightProperty, da);
+        }
+
+        public void CloseAllCardsExternal()
+        {
+            if (isOpen)
+            {
+                CloseAdvanceCard();
+            }
         }
 
         private void CloseAdvanceCard()
         {
             isOpen = false;
             DoubleAnimation da = new DoubleAnimation();
-            da.From = cardHeight;
-            da.To = 50;
+            da.From = advanceCardHeight;
+            da.To = normalCardHeight;
             da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             this.BeginAnimation(Panel.HeightProperty, da);
             frame.BeginAnimation(Rectangle.HeightProperty, da);
@@ -90,7 +100,7 @@ namespace ForkliftManager
         {
             DoubleAnimation da = new DoubleAnimation();
             da.From = 0;
-            da.To = 50;
+            da.To = normalCardHeight;
             da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             this.BeginAnimation(Panel.HeightProperty, da);
 
@@ -116,12 +126,12 @@ namespace ForkliftManager
 
             frame = new Rectangle();
             frame.Width = cardWidth;
-            frame.Height = 50;
+            frame.Height = normalCardHeight;
             frame.StrokeThickness = 2;
             frame.Stroke = cardColors[FRAME];
             this.Children.Add(frame);
 
-            this.Height = 50;
+            this.Height = normalCardHeight;
             this.Width = cardWidth;
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
@@ -204,11 +214,11 @@ namespace ForkliftManager
         {
             if (plassering.Text == "")
             {
-                plassering.Text = "PLASSERING";
+                plassering.Text = "#PLASSERING";
             }
             if (serieNr.Text == "")
 	        {
-                serieNr.Text = "SERIENUMMER";
+                serieNr.Text = "#SERIENUMMER";
 	        }
         }
 
@@ -406,11 +416,12 @@ namespace ForkliftManager
             {
                 listRef.Remove(this);
                 UpdateList();
+                UpdateAntallTrucksRef();
             }
             else
             {
                 da.From = 0;
-                da.To = 50;
+                da.To = normalCardHeight;
                 da.Duration = new Duration(TimeSpan.FromMilliseconds(300));
                 this.BeginAnimation(Panel.HeightProperty, da);
                 frame.BeginAnimation(Panel.HeightProperty, da);
@@ -488,7 +499,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[OK];//cardColors[OK];
                 Priority = 4;
             }
-            else if (thisYear > yearReg || thisYear >= yearReg && thisMonth > monthReg)
+            else if (thisYear > yearReg || thisYear >= yearReg && thisMonth > monthReg || thisMonth==12 && monthReg==1)
             {
                 this.Background = cardGradientColors[DANGER];//cardColors[DANGER];
                 Priority = 0;
@@ -503,7 +514,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[WARNING];//cardColors[WARNING];
                 Priority = 2;
             }
-            else if (plassering.Text.Equals("") || serieNr.Text.Equals("") || plassering.Text.Equals("Plassering",StringComparison.OrdinalIgnoreCase) || serieNr.Text.Equals("Serienummer",StringComparison.OrdinalIgnoreCase))
+            else if (plassering.Text.Equals("") || serieNr.Text.Equals("") || plassering.Text.Equals("#Plassering",StringComparison.OrdinalIgnoreCase) || serieNr.Text.Equals("#Serienummer",StringComparison.OrdinalIgnoreCase))
             {
                 this.Background = cardGradientColors[OK];//cardColors[OK];
                 Priority = 4;
@@ -625,6 +636,21 @@ namespace ForkliftManager
         public void SetCardWidth(int newWidth)
         {
             cardWidth = newWidth;
+        }
+
+        internal void SetAntallTrucksRef(TextBlock antallTrucks)
+        {
+            antallTrucksRef = antallTrucks;
+        }
+
+        private void UpdateAntallTrucksRef()
+        {
+            antallTrucksRef.Text = listRef.Count.ToString();
+        }
+
+        internal void SetHeight(int p)
+        {
+            normalCardHeight = p;
         }
     }
 }
