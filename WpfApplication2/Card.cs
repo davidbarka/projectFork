@@ -70,7 +70,7 @@ namespace ForkliftManager
         {
             isOpen = true;
             DoubleAnimation da = new DoubleAnimation();
-            da.From = normalCardHeight;
+            da.From = this.Height;
             da.To = advanceCardHeight;
             da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             this.BeginAnimation(Panel.HeightProperty, da);
@@ -89,7 +89,7 @@ namespace ForkliftManager
         {
             isOpen = false;
             DoubleAnimation da = new DoubleAnimation();
-            da.From = advanceCardHeight;
+            da.From = this.Height;
             da.To = normalCardHeight;
             da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             this.BeginAnimation(Panel.HeightProperty, da);
@@ -507,7 +507,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[OK];//cardColors[OK];
                 Priority = 4;
             }
-            else if (thisYear > yearReg || thisYear >= yearReg && thisMonth > monthReg || thisMonth==12 && monthReg==1)
+            else if (thisYear > yearReg || thisYear >= yearReg && thisMonth > monthReg)
             {
                 this.Background = cardGradientColors[DANGER];//cardColors[DANGER];
                 Priority = 0;
@@ -517,7 +517,7 @@ namespace ForkliftManager
                 this.Background = cardGradientColors[DANGER];//cardColors[DANGER];
                 Priority = 1;
             }
-            else if (thisYear == yearReg && thisMonth == (monthReg - 1) || thisYear == ServiceYear - 1 && ServiceMonth == 12 && ServiceYear != 0)
+            else if (thisYear == yearReg && thisMonth == (monthReg - 1) || thisYear == ServiceYear - 1 && ServiceMonth == 12 && ServiceYear != 0 || thisMonth == 12 && monthReg == 1)
             {
                 this.Background = cardGradientColors[WARNING];//cardColors[WARNING];
                 Priority = 2;
