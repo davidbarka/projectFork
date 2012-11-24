@@ -112,6 +112,20 @@ namespace ForkliftManager
             Grid.SetRow(deleteBtn, 2);
             mainGrid.Children.Add(deleteBtn);
             deleteBtn.Click +=new RoutedEventHandler(exitButton_MouseLeftButtonDown);
+            this.MouseEnter += new MouseEventHandler(mouseEnterCard);
+            this.MouseLeave += new MouseEventHandler(mouseLeaveCard);
+        }
+
+        private void mouseLeaveCard(object sender, MouseEventArgs e)
+        {
+            frame.StrokeThickness = 1;
+            frame.Stroke = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void mouseEnterCard(object sender, MouseEventArgs e)
+        {
+            frame.StrokeThickness = 2;
+            frame.Stroke = new SolidColorBrush(Colors.SkyBlue);
         }
 
         private void exitButton_MouseLeftButtonDown(object sender, RoutedEventArgs e)

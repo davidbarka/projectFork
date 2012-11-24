@@ -49,8 +49,19 @@ namespace ForkliftManager
             UpdateStackPanelRef();
             UpdateAntallTrucksRef();
             UpdateServiceLists();
+            this.KeyDown += MainWindow_KeyDown;
             if(cards.Count > 1)
                 showSideMenu_Click(null,null);
+        }
+
+        void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                search.Clear();
+                UpdateList();
+                antallTrucks.Text = cards.Count.ToString();
+            }
         }
 
         private void UpdateAntallTrucksRef()
@@ -195,6 +206,7 @@ namespace ForkliftManager
                 }
                 type = (string)Type.SelectedItem;
                 merknader = Merknad.Text;
+                Merknad.Clear();
                 cards.Add(new Card(internr, serienr, plass, type, aar, maande, merknader, cards, cardStack));
                 cards[cards.Count - 1].SetAntallTrucksRef(antallTrucks);
                 cardStack.Children.Insert(0, cards[cards.Count - 1]);
@@ -233,6 +245,12 @@ namespace ForkliftManager
 
         private void search_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Escape)
+            {
+                search.Text = "";
+                UpdateList();
+                return;
+            }
             string comp = search.Text;
             comp = comp.ToUpper();
             List<Card> temp = new List<Card>();
@@ -273,6 +291,7 @@ namespace ForkliftManager
                 HideAnimation(Merknad, 186, 15);
                 HideAnimation(year, 186, 15);
                 HideAnimation(Type, 186, 15);
+                HideAnimation(merknadLabel, 186, 15);
                 HideAnimation(aarskontroll, 186, 15);
                 HideAnimation(interLabel, 186, 15);
                 HideAnimation(serieLabel, 186, 15);
@@ -283,20 +302,23 @@ namespace ForkliftManager
                 DoubleAnimation da2 = new DoubleAnimation(186, 15, TimeSpan.FromMilliseconds(200));
                 monthGrid.BeginAnimation(Grid.WidthProperty, da2);
 
-                RegNummer.Opacity = 0;
-                SerieNr.Opacity = 0;
-                plassering.Opacity = 0;
-                Merknad.Opacity = 0;
-                year.Opacity = 0;
-                Type.Opacity = 0;
-                monthGrid.Opacity = 0;
-                label.Opacity = 0;
-                aarskontroll.Opacity = 0;
-                interLabel.Opacity = 0;
-                serieLabel.Opacity = 0;
-                plassLabel.Opacity = 0;
-                dateCheck.Opacity = 0;
-                AddBtn.Opacity = 0;
+         
+                FadeAnimation(RegNummer,1,0);
+                FadeAnimation(SerieNr, 1, 0);
+                FadeAnimation(plassering, 1, 0);
+                FadeAnimation(Merknad, 1, 0);
+                FadeAnimation(year, 1, 0);
+                FadeAnimation(Type, 1, 0);
+                DoubleAnimation da3 = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
+                monthGrid.BeginAnimation(Grid.OpacityProperty, da3);
+                FadeAnimation(label, 1, 0);
+                FadeAnimation(aarskontroll, 1, 0);
+                FadeAnimation(interLabel, 1, 0);
+                FadeAnimation(merknadLabel, 1, 0);
+                FadeAnimation(serieLabel, 1, 0);
+                FadeAnimation(plassLabel, 1, 0);
+                FadeAnimation(dateCheck, 1, 0);
+                FadeAnimation(AddBtn, 1, 0);
                 isMenuShowing = false;
                 da.From = 206;
                 da.To = 15;
@@ -316,6 +338,7 @@ namespace ForkliftManager
                 HideAnimation(plassering, 15, 186);
                 HideAnimation(Merknad, 15, 186);
                 HideAnimation(year, 15, 186);
+                HideAnimation(merknadLabel, 15, 186);
                 HideAnimation(Type, 15, 186);
                 HideAnimation(aarskontroll, 15, 186);
                 HideAnimation(interLabel, 15, 186);
@@ -327,20 +350,22 @@ namespace ForkliftManager
                 DoubleAnimation da2 = new DoubleAnimation(15, 186, TimeSpan.FromMilliseconds(200));
                 monthGrid.BeginAnimation(Grid.WidthProperty, da2);
 
-                RegNummer.Opacity = 100;
-                SerieNr.Opacity = 100;
-                plassering.Opacity = 100;
-                Merknad.Opacity = 100;
-                year.Opacity = 100;
-                Type.Opacity = 100;
-                monthGrid.Opacity = 100;
-                label.Opacity = 100;
-                aarskontroll.Opacity = 100;
-                interLabel.Opacity = 100;
-                serieLabel.Opacity = 100;
-                plassLabel.Opacity = 100;
-                dateCheck.Opacity = 100;
-                AddBtn.Opacity = 100;
+                FadeAnimation(RegNummer, 0, 1);
+                FadeAnimation(SerieNr, 0, 1);
+                FadeAnimation(plassering, 0, 1);
+                FadeAnimation(Merknad, 0, 1);
+                FadeAnimation(year, 0, 1);
+                FadeAnimation(Type, 0, 1);
+                DoubleAnimation da3 = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
+                monthGrid.BeginAnimation(Grid.OpacityProperty, da3);
+                FadeAnimation(label, 0, 1);
+                FadeAnimation(aarskontroll, 0, 1);
+                FadeAnimation(interLabel, 0, 1);
+                FadeAnimation(merknadLabel, 0, 1);
+                FadeAnimation(serieLabel, 0, 1);
+                FadeAnimation(plassLabel, 0, 1);
+                FadeAnimation(dateCheck, 0, 1);
+                FadeAnimation(AddBtn, 0, 1);
 
                 isMenuShowing = true;
                 SetButtonImg(false);
@@ -351,6 +376,11 @@ namespace ForkliftManager
         {
             DoubleAnimation da = new DoubleAnimation(start, end, TimeSpan.FromMilliseconds(200));
             AnimationObject.BeginAnimation(Control.WidthProperty, da);
+        }
+        private void FadeAnimation(Control AnimationObject, double start, double end)
+        {
+            DoubleAnimation da = new DoubleAnimation(start, end, TimeSpan.FromMilliseconds(200));
+            AnimationObject.BeginAnimation(Control.OpacityProperty, da);
         }
 
         private void SetButtonImg(bool isRight)

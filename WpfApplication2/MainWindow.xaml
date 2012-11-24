@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="window" x:Class="ForkliftManager.MainWindow"
-        Title="Forklift organizer" Height="700" Width="1024" BorderThickness="0" BorderBrush="White" MinWidth="1024" MinHeight="600" Closing="window_Closing" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Foreground="White">
+        Title="Forklift organizer" Height="700" Width="1024" BorderThickness="0" BorderBrush="White" MinWidth="800" MinHeight="620" Closing="window_Closing" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Foreground="White">
     <Window.Background>
         <ImageBrush Stretch="UniformToFill"/>
     </Window.Background>
@@ -23,14 +23,14 @@
         <Label x:Name="label" Content="ny truck" HorizontalAlignment="Left" Margin="0,-9,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Grid.RowSpan="2" Height="58" Width="152" />
         <TextBox x:Name="RegNummer" HorizontalAlignment="Left" Height="26" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Internnummer" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
         <Button x:Name="AddBtn" Content="legg til" Margin="0,0,10,10" Click="AddBtn_Click" Grid.Row="1" FontSize="18" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="97" FontWeight="Bold"/>
-        <Grid x:Name="listView" Margin="0,0,-2,21" Grid.Row="1" Grid.Column="1">
+        <Grid x:Name="listView" Margin="0,0,-2,21" Grid.Column="1" Grid.Row="1">
             <ScrollViewer x:Name="scroller" Margin="0,0,10,0">
                 <StackPanel x:Name="cardStack"/>
             </ScrollViewer>
         </Grid>
         <TextBox x:Name="SerieNr" HorizontalAlignment="Left" Height="26" Margin="10,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Serienummer" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
         <TextBox x:Name="plassering" HorizontalAlignment="Left" Height="26" Margin="10,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Plassering" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
-        <TextBox x:Name="search" Grid.Column="1" Height="23" Margin="0,6,10,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="Search" FontSize="16" KeyUp="search_KeyUp" HorizontalAlignment="Right" Width="143"/>
+        <TextBox x:Name="search" Grid.Column="1" Height="23" Margin="0,6,10,0" TextWrapping="Wrap" VerticalAlignment="Top" ToolTip="søk etter internnr. plassering eller serienr." FontSize="16" KeyUp="search_KeyUp" HorizontalAlignment="Right" Width="143"/>
         <ComboBox x:Name="year" HorizontalAlignment="Left" Margin="10,0,0,215" Grid.Row="1" Width="186" ToolTip="Year" FontSize="16" BorderBrush="White" Height="26" VerticalAlignment="Bottom">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -53,8 +53,8 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Label x:Name="aarskontroll" Content="årskontroll" HorizontalAlignment="Left" Margin="0,0,0,265" FontSize="20" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Width="196" Grid.Row="1" Height="38" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="Merknad" HorizontalAlignment="Left" Height="26" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Merknad" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
-        <ComboBox x:Name="Type" HorizontalAlignment="Left" Margin="10,194,0,0" Grid.Row="1" VerticalAlignment="Top" Width="186" Height="26" ToolTip="Type" FontSize="16" BorderBrush="White" SelectedIndex="0">
+        <TextBox x:Name="Merknad" HorizontalAlignment="Left" Height="26" Margin="10,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" ToolTip="Merknad" FontSize="16" FontWeight="Bold" Grid.Row="1"/>
+        <ComboBox x:Name="Type" HorizontalAlignment="Left" Margin="10,209,0,0" Grid.Row="1" VerticalAlignment="Top" Width="186" Height="26" ToolTip="Type" FontSize="16" BorderBrush="White" SelectedIndex="0">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -74,11 +74,12 @@
             <System:String>Kombi smalgang</System:String>
         </ComboBox>
         <CheckBox x:Name="dateCheck" Content="ukjent dato" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="kryss av denne når du ikke vet årskontrollen" Height="16" VerticalAlignment="Bottom" Foreground="White" FontWeight="Bold" />
-        <Button x:Name="showSideMenu" Content="" HorizontalAlignment="Right" Margin="0,3,0,6" Width="35" Foreground="White" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="16" Click="showSideMenu_Click" Background="{x:Null}" ToolTip="Vis meny" BorderThickness="0"/>
+        <Button x:Name="showSideMenu" Content="" HorizontalAlignment="Right" Margin="0,3,0,6" Width="30" Foreground="White" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="16" Click="showSideMenu_Click" Background="{x:Null}" ToolTip="Vis meny" BorderThickness="0"/>
         <Button x:Name="closeAll" Content="lukk alle" Grid.Column="1" HorizontalAlignment="Left" Margin="89,3,0,0" VerticalAlignment="Top" Width="76" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="closeAll_Click" ToolTip="lukker alle åpne kort"/>
         <TextBlock x:Name="antallTrucksLabel" Grid.Column="1" HorizontalAlignment="Left" Margin="239,7,0,8" TextWrapping="Wrap" Text="antall kort:" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
         <TextBlock x:Name="antallTrucks" Grid.Column="1" HorizontalAlignment="Left" Margin="329,7,0,5" TextWrapping="Wrap" Text="1" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
         <Button x:Name="view" Content="kompakt" Margin="10,3,0,6" Click="view_Click" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="74" Grid.Column="1" ToolTip="Endre visning på kortene"/>
         <Button x:Name="CheckAnnual" Content="sjekk" Grid.Column="1" HorizontalAlignment="Left" Margin="171,3,0,0" VerticalAlignment="Top" Width="54" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="CheckAnnual_Click" ToolTip="sjekker alle årskontrollene"/>
+        <Label x:Name="merknadLabel" Content="merknad" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FFD1CBCB" Height="26" Width="106" Grid.Row="1"/>
     </Grid>
 </Window>

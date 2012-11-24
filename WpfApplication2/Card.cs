@@ -52,7 +52,7 @@ namespace ForkliftManager
         StackPanel serviceStack;
         private static int cardID = 0;
         public int ID { get; set; }
-        private TextBox plassTextBox, serieTextBox;
+        private TextBox plassTextBox, serieTextBox, internTextBox;
         private bool editMode = false;
         private TextBlock antallTrucksRef;
         private TextBox merknaderBox { get; set; }
@@ -111,6 +111,8 @@ namespace ForkliftManager
         {
             plassTextBox = new TextBox();
             serieTextBox = new TextBox();
+            internTextBox = new TextBox();
+            internTextBox.FontSize = 20;
             interNr = new TextBlock();
             interNr.Text = internr;
             serieNr = new TextBlock();
@@ -195,6 +197,7 @@ namespace ForkliftManager
             {
                 plassering.Text = plassTextBox.Text.ToUpper();
                 serieNr.Text = serieTextBox.Text.ToUpper();
+                interNr.Text = internTextBox.Text.ToUpper();
                 editMode = false;
                 Grid.SetRow(plassering, 1);
                 Grid.SetColumn(plassering, 2);
@@ -206,12 +209,18 @@ namespace ForkliftManager
                 Grid.SetColumn(serieNr, 2);
                 grid.Children.Remove(serieTextBox);
                 grid.Children.Add(serieNr);
+
+                Grid.SetRow(interNr, 0);
+                Grid.SetColumn(interNr, 1);
+                grid.Children.Remove(internTextBox);
+                grid.Children.Add(interNr);
                 CheckAnnualInspection();
             }
             else
             {
                 plassTextBox.Text = plassering.Text;
                 serieTextBox.Text = serieNr.Text;
+                internTextBox.Text = interNr.Text;
                 editMode = true;
                 Grid.SetRow(plassTextBox, 1);
                 Grid.SetColumn(plassTextBox, 2);
@@ -222,6 +231,11 @@ namespace ForkliftManager
                 Grid.SetColumn(serieTextBox, 2);
                 grid.Children.Remove(serieNr);
                 grid.Children.Add(serieTextBox);
+
+                Grid.SetRow(internTextBox, 0);
+                Grid.SetColumn(internTextBox, 1);
+                grid.Children.Remove(interNr);
+                grid.Children.Add(internTextBox);
             }
             CheckSerieAndPlass();
         }
