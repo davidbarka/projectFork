@@ -49,7 +49,8 @@ namespace ForkliftManager
             UpdateStackPanelRef();
             UpdateAntallTrucksRef();
             UpdateServiceLists();
-            showSideMenu_Click(null,null);
+            if(cards.Count > 1)
+                showSideMenu_Click(null,null);
         }
 
         private void UpdateAntallTrucksRef()
@@ -398,6 +399,14 @@ namespace ForkliftManager
                     cards[i].SetHeight(50);
                 }
                 view.Content = "kompakt";
+            }
+        }
+
+        private void CheckAnnual_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                cards[i].CheckAnnualInspection();
             }
         }
     }

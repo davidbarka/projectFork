@@ -75,9 +75,10 @@
         </ComboBox>
         <CheckBox x:Name="dateCheck" Content="ukjent dato" HorizontalAlignment="Left" Margin="10,0,0,245" Grid.Row="1" ToolTip="Annual inspection date" Height="16" VerticalAlignment="Bottom" Foreground="White" FontWeight="Bold" />
         <Button x:Name="showSideMenu" Content="" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Top" Width="35" Height="27" Foreground="White" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="16" Click="showSideMenu_Click" Background="{x:Null}" ToolTip="Vis meny" BorderThickness="0"/>
-        <Button x:Name="closeAll" Content="lukk alle" Grid.Column="1" HorizontalAlignment="Left" Margin="95,3,0,0" VerticalAlignment="Top" Width="76" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="closeAll_Click"/>
-        <TextBlock x:Name="antallTrucksLabel" Grid.Column="1" HorizontalAlignment="Left" Margin="187,7,0,8" TextWrapping="Wrap" Text="antall trucker:" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
-        <TextBlock x:Name="antallTrucks" Grid.Column="1" HorizontalAlignment="Left" Margin="297,8,0,4" TextWrapping="Wrap" Text="1" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
+        <Button x:Name="closeAll" Content="lukk alle" Grid.Column="1" HorizontalAlignment="Left" Margin="89,3,0,0" VerticalAlignment="Top" Width="76" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="closeAll_Click"/>
+        <TextBlock x:Name="antallTrucksLabel" Grid.Column="1" HorizontalAlignment="Left" Margin="239,7,0,8" TextWrapping="Wrap" Text="antall kort:" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
+        <TextBlock x:Name="antallTrucks" Grid.Column="1" HorizontalAlignment="Left" Margin="329,8,0,4" TextWrapping="Wrap" Text="1" FontWeight="Bold" FontSize="16" Foreground="#FFD1CBCB"/>
         <Button x:Name="view" Content="kompakt" Margin="10,3,0,6" Click="view_Click" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="74" Grid.Column="1" ToolTip="Endre visning på kortene"/>
+        <Button x:Name="CheckAnnual" Content="sjekk" Grid.Column="1" HorizontalAlignment="Left" Margin="171,3,0,0" VerticalAlignment="Top" Width="54" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" FontWeight="Bold" Height="28" Click="CheckAnnual_Click"/>
     </Grid>
 </Window>
