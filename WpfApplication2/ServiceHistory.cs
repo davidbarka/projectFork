@@ -27,15 +27,18 @@ namespace ForkliftManager
         private TextBlock hoursBlock;
         private bool isOpen = false;
         private Rectangle frame;
-        private int fullCardHeight = 50;
+        private int fullCardHeight = 66;
         private int cardHeight = 24;
         public int cardID { get; set; }
+        private Button deleteBtn;
+        private List<ServiceHistory> serviceListeRef;
 
-        public ServiceHistory(string date, int CardID)
+        public ServiceHistory(string date, int CardID, List<ServiceHistory> serviceListeRef)
         {
             ServiceDate = date;
             ServiceHours = "0";
             cardID = CardID;
+            this.serviceListeRef = serviceListeRef;
             Init();
         }
 
@@ -43,7 +46,7 @@ namespace ForkliftManager
         {
             mainGrid = new Grid();
             ColumnDefinition col0 = new ColumnDefinition();
-            col0.Width = new GridLength(10);
+            col0.Width = new GridLength(15);
             ColumnDefinition col1 = new ColumnDefinition();
             col1.Width = new GridLength(100);
             ColumnDefinition col2 = new ColumnDefinition();
@@ -58,6 +61,8 @@ namespace ForkliftManager
             RowDefinition row = new RowDefinition();
             row.Height = new GridLength(24);
             mainGrid.RowDefinitions.Add(row);
+            RowDefinition row3 = new RowDefinition();
+            mainGrid.RowDefinitions.Add(row3);
             this.Background = new SolidColorBrush(Colors.White);
             this.Width = 300;
             this.Height = cardHeight;
@@ -100,6 +105,42 @@ namespace ForkliftManager
             input.KeyUp += input_KeyUp;
             //input.BorderBrush = null;
             input.FontSize = 16;
+            deleteBtn = new Button();
+            deleteBtn.Content = "X";
+            deleteBtn.FontWeight = FontWeights.Bold;
+            Grid.SetColumn(deleteBtn, 0);
+            Grid.SetRow(deleteBtn, 2);
+            mainGrid.Children.Add(deleteBtn);
+            deleteBtn.Click +=new RoutedEventHandler(exitButton_MouseLeftButtonDown);
+        }
+
+        private void exitButton_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            Delete();
+        }
+
+        private void Delete()
+        {
+            DoubleAnimation da = new DoubleAnimation();
+            da.From = this.Height;
+            da.To = 0;
+            da.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+            this.BeginAnimation(Panel.HeightProperty, da);
+            frame.BeginAnimation(Panel.HeightProperty, da);
+            isOpen = false;
+            if (System.Windows.MessageBox.Show("Vil du slette denne servicen?", "Slette service?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                serviceListeRef.Remove(this);
+                //UpdateList();
+            }
+            else
+            {
+                da.From = 0;
+                da.To = cardHeight;
+                da.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+                this.BeginAnimation(Panel.HeightProperty, da);
+                frame.BeginAnimation(Panel.HeightProperty, da);
+            }
         }
 
         private void clickedCard(object sender, MouseButtonEventArgs e)
@@ -160,6 +201,7 @@ namespace ForkliftManager
             ServiceDate = (string)info.GetValue("ServiceYear", typeof(string));
             ServiceHours = (string)info.GetValue("ServiceHours", typeof(string));
             cardID = (int)info.GetValue("cardID", typeof(int));
+            serviceListeRef = (List<ServiceHistory>)info.GetValue("serviceListeRef", typeof(List<ServiceHistory>));
             Init();
         }
 
@@ -168,6 +210,12 @@ namespace ForkliftManager
             info.AddValue("ServiceYear", ServiceDate);
             info.AddValue("ServiceHours", ServiceHours);
             info.AddValue("cardID", cardID);
+            info.AddValue("serviceListeRef", serviceListeRef);
+        }
+
+        public void SetServiceListRef(List<ServiceHistory> innput)
+        {
+            serviceListeRef = innput;
         }
     }
 }

@@ -172,6 +172,14 @@ namespace ForkliftManager
             UpdateServiceList();
         }
 
+        public void UpdateServiceListRef()
+        {
+            for (int i = 0; i < repHistorik.Count; i++)
+            {
+                repHistorik[i].SetServiceListRef(repHistorik);
+            }
+        }
+
         private void EditCard(object sender, MouseButtonEventArgs e)
         {
            
@@ -280,7 +288,7 @@ namespace ForkliftManager
         private void serviceDone_Click(object sender, RoutedEventArgs e)
         {
             if (serviceDate.Text.Equals(""))serviceDate.Text = DateTime.Now.ToShortDateString();
-            repHistorik.Add(new ServiceHistory(serviceDate.Text, ID));
+            repHistorik.Add(new ServiceHistory(serviceDate.Text, ID, repHistorik));
             serviceStack.Children.Insert(0, repHistorik[repHistorik.Count-1]);
             
         }

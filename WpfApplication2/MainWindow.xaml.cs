@@ -128,6 +128,7 @@ namespace ForkliftManager
 	                }
                 }
                 cards[i].UpdateServiceList();
+                cards[i].UpdateServiceListRef();
             }
         }
 
