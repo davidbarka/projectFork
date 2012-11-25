@@ -50,9 +50,9 @@ namespace ForkliftManager
                     return cards2;
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                System.Windows.MessageBox.Show("Fant ikke cards.bin! Ny fil blir opprettet.");
+                //System.Windows.MessageBox.Show("Fant ikke cards.bin! Ny fil blir opprettet.");
             }
             return new List<Card>();
         }
@@ -88,9 +88,9 @@ namespace ForkliftManager
                     return serviceLists2;
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                System.Windows.MessageBox.Show("Fant ikke service.bin! Ny fil blir opprettet.");
+               // System.Windows.MessageBox.Show("Fant ikke service.bin! Ny fil blir opprettet.");
             }
             return new List<ServiceHistory>();
         }

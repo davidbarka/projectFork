@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace ForkliftManager
 {
@@ -34,6 +35,7 @@ namespace ForkliftManager
         private int listCount = 0;
         private bool isMenuShowing = true;
         private bool smallView = false;
+        private DispatcherTimer checkTimer;
 
         public MainWindow()
         {
@@ -49,10 +51,29 @@ namespace ForkliftManager
             UpdateStackPanelRef();
             UpdateAntallTrucksRef();
             UpdateServiceLists();
+            SetupDispatcherTimer();
             this.KeyDown += MainWindow_KeyDown;
             if(cards.Count > 1)
                 showSideMenu_Click(null,null);
         }
+
+        private void SetupDispatcherTimer()
+        {
+            checkTimer = new DispatcherTimer();
+            checkTimer.Tick += new EventHandler(checkTick);
+            checkTimer.Interval = new TimeSpan(12,0,0);
+            checkTimer.Start();
+        }
+
+        private void checkTick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                cards[i].CheckAnnualInspection();
+            }
+        }
+
+
 
         void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
@@ -62,23 +83,24 @@ namespace ForkliftManager
                 UpdateList();
                 antallTrucks.Text = cards.Count.ToString();
             }
+            bool bla = false;
             if (e.Key == Key.Tab)
             {
                 if (RegNummer.IsKeyboardFocused)
                 {
-                    plassering.Focus();
+                    bla = plassering.Focus();
                 }
                 else if (plassering.IsKeyboardFocused)
                 {
-                    SerieNr.Focus();
+                    bla = SerieNr.Focus();
                 }
                 else if (SerieNr.IsKeyboardFocused)
                 {
-                    Merknad.Focus();
+                    bla = Merknad.Focus();
                 }
                 else if (Merknad.IsKeyboardFocused)
                 {
-                    Type.Focus();
+                    bla = Type.Focus();
                 }
             }
         }
@@ -232,6 +254,7 @@ namespace ForkliftManager
                 SaveCards();
                 SetAntallTrucks();
             }
+            RegNummer.Focus();
         }
  
 
@@ -267,6 +290,7 @@ namespace ForkliftManager
             if (e.Key == Key.Escape)
             {
                 search.Text = "";
+                Keyboard.ClearFocus();
                 UpdateList();
                 return;
             }
