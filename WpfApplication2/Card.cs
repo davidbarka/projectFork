@@ -99,11 +99,13 @@ namespace ForkliftManager
 
         public void CardAppear()
         {
+            isOpen = false;
             DoubleAnimation da = new DoubleAnimation();
             da.From = 0;
             da.To = normalCardHeight;
             da.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             this.BeginAnimation(Panel.HeightProperty, da);
+            frame.BeginAnimation(Rectangle.HeightProperty, da);
 
         }
 

@@ -62,6 +62,25 @@ namespace ForkliftManager
                 UpdateList();
                 antallTrucks.Text = cards.Count.ToString();
             }
+            if (e.Key == Key.Tab)
+            {
+                if (RegNummer.IsKeyboardFocused)
+                {
+                    plassering.Focus();
+                }
+                else if (plassering.IsKeyboardFocused)
+                {
+                    SerieNr.Focus();
+                }
+                else if (SerieNr.IsKeyboardFocused)
+                {
+                    Merknad.Focus();
+                }
+                else if (Merknad.IsKeyboardFocused)
+                {
+                    Type.Focus();
+                }
+            }
         }
 
         private void UpdateAntallTrucksRef()
