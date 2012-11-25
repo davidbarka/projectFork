@@ -36,25 +36,74 @@ namespace ForkliftManager
         private bool isMenuShowing = true;
         private bool smallView = false;
         private DispatcherTimer checkTimer;
+        // variables for trial application
+        private int[] endDate = {2013, 1, 1};
+        private int[] todaysDate = {DateTime.Now.Year,DateTime.Now.Day,DateTime.Now.Month};
+        private int[] lastOpenedDate = {0,0,0};
+        bool trial;
 
         public MainWindow()
         {
             InitializeComponent();
             save = new SaveFile();
-            cards = new List<Card>();
-            ServiceList = new List<ServiceHistory>();
-            Init();
-            cards = save.Open();
-            ServiceList = save.OpenService();
-            UpdateList();
-            SetAntallTrucks();
-            UpdateStackPanelRef();
-            UpdateAntallTrucksRef();
-            UpdateServiceLists();
-            SetupDispatcherTimer();
-            this.KeyDown += MainWindow_KeyDown;
-            if(cards.Count > 1)
-                showSideMenu_Click(null,null);
+            trial = CheckTrial();
+            if (trial)
+            {
+                cards = new List<Card>();
+                ServiceList = new List<ServiceHistory>();
+                Init();
+                cards = save.Open();
+                ServiceList = save.OpenService();
+                UpdateList();
+                SetAntallTrucks();
+                UpdateStackPanelRef();
+                UpdateAntallTrucksRef();
+                UpdateServiceLists();
+                SetupDispatcherTimer();
+                this.KeyDown += MainWindow_KeyDown;
+                if(cards.Count > 1)
+                    showSideMenu_Click(null,null);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Produktdemo er ferdig, kontakt David Barka på tlf. 40041317 ved eventuelle spørsmål.");
+                this.Close();
+            }
+        }
+
+        private bool CheckTrial()
+        {
+            List<int> temp = save.OpenTrial();
+            if(temp != null)
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    lastOpenedDate[i] = temp[i];
+                }
+            else
+            {
+                for (int i = 0; i < lastOpenedDate.Length; i++)
+                {
+                    lastOpenedDate[i] = todaysDate[i];
+                }
+            }
+
+            if (endDate[0]<=todaysDate[0])
+            {
+                return false;
+            }
+            if (lastOpenedDate[1] > todaysDate[1] && lastOpenedDate[2] > todaysDate[2] || todaysDate[0] < 2012)
+            {
+                return false;
+            }
+            if (lastOpenedDate[1] > todaysDate[1] && lastOpenedDate[2] ==12)
+            {
+                return false;
+            }
+            for (int i = 0; i < lastOpenedDate.Length; i++)
+            {
+                lastOpenedDate[i] = todaysDate[i];
+            }
+            return true;
         }
 
         private void SetupDispatcherTimer()
@@ -71,6 +120,7 @@ namespace ForkliftManager
             {
                 cards[i].CheckAnnualInspection();
             }
+            CheckTrial();
         }
 
 
@@ -155,6 +205,7 @@ namespace ForkliftManager
             GetServiceList();
             save.Save(cards);
             save.Save(ServiceList);
+            save.Save(lastOpenedDate);
         }
 
         private void GetServiceList()
@@ -320,7 +371,8 @@ namespace ForkliftManager
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            SaveCards();
+            if(trial)
+                SaveCards();
         }
 
         private void showSideMenu_Click(object sender, RoutedEventArgs e)

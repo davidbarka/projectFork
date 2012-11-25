@@ -94,5 +94,47 @@ namespace ForkliftManager
             }
             return new List<ServiceHistory>();
         }
+        //==============================Trial=======================================
+        public void Save(int[] openingDate)
+        {
+            try
+            {
+                using (Stream stream = File.Open("Data.dll", FileMode.Create))
+                {
+                    BinaryFormatter bin1 = new BinaryFormatter();
+                    bin1.Serialize(stream, openingDate);
+                    stream.Close();
+                    stream.Dispose();
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show("Klarte ikke å lagre service.bin!");
+            }
+        }
+        public List<int> OpenTrial()
+        {
+            try
+            {
+                using (Stream stream = File.Open("Data.dll", FileMode.Open))
+                {
+                    BinaryFormatter bin2 = new BinaryFormatter();
+                    List<int> openingdate = new List<int>();
+                    int[] test = (int[])bin2.Deserialize(stream);
+                    openingdate.Add(test[0]);
+                    openingdate.Add(test[1]);
+                    openingdate.Add(test[2]);
+                    stream.Close();
+                    stream.Dispose();
+                    return openingdate;
+                }
+            }
+            catch (IOException e)
+            {
+                // System.Windows.MessageBox.Show("Fant ikke service.bin! Ny fil blir opprettet.");
+            }
+            return null;
+        }
+        private int[] bla = { 0, 0, 0 };
     }
 }
