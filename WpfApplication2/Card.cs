@@ -111,6 +111,7 @@ namespace ForkliftManager
 
         private void Init(string internr, string serienr, string plass, string type, int aar, int maande, string merknad)
         {
+            this.KeyUp += Card_KeyUp;
             plassTextBox = new TextBox();
             serieTextBox = new TextBox();
             internTextBox = new TextBox();
@@ -177,6 +178,14 @@ namespace ForkliftManager
             this.MouseRightButtonDown += new MouseButtonEventHandler(showMenu);
             CheckSerieAndPlass();
             UpdateServiceList();
+        }
+
+        void Card_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return && editMode)
+            {
+                EditCard();
+            }
         }
 
         private void showMenu(object sender, MouseButtonEventArgs e)
